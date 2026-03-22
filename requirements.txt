@@ -16,3 +16,4 @@ crispy-bootstrap4>=2.0
 
 # Python-dotenv for env vars
 python-dotenv>=1.0.0
+whitenoise

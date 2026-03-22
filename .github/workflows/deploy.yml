@@ -18,26 +18,23 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
       
-      - name: Deploy to VPS
+      - name: Upload files to VPS
         run: |
-          scp -o StrictHostKeyChecking=no -r * ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/opt/portafolio/
+          scp -o StrictHostKeyChecking=no -o BatchMode=yes -r * ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/opt/portafolio/
+          echo "Files uploaded successfully"
       
-      - name: Build Docker
+      - name: Notify
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "cd /opt/portafolio && docker-compose down 2>/dev/null || true"
-          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "cd /opt/portafolio && docker-compose up -d --build"
-      
-      - name: Wait for container
-        run: sleep 45
-      
-      - name: Run migrations
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker exec portafolio-web python manage.py migrate --noinput 2>/dev/null || echo 'Migrations done'"
-      
-      - name: Collect static
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker exec portafolio-web python manage.py collectstatic --noinput 2>/dev/null || echo 'Static done'"
-      
-      - name: Verify
-        run: |
-          curl -f -o /dev/null -s -w "%{http_code}" http://${{ secrets.VPS_HOST }}:8012/ || echo "Site may be starting"
+          echo "=========================================="
+          echo "¡Archivos subidos al VPS!"
+          echo ""
+          echo "Para completar el deploy, ejecuta en el VPS:"
+          echo "  cd /opt/portafolio"
+          echo "  docker-compose down"
+          echo "  docker-compose up -d --build"
+          echo "  docker exec portafolio-web python manage.py migrate --noinput"
+          echo "  docker exec portafolio-web python manage.py collectstatic --noinput"
+          echo ""
+          echo "O ejecuta el script de deploy:"
+          echo "  cd /opt/portafolio && bash deploy.sh"
+          echo "=========================================="

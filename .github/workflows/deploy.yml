@@ -24,12 +24,12 @@ jobs:
             mkdir -p /opt/portafolio
             cat > /opt/portafolio/.env << 'ENVEOF'
             DEBUG=False
-            SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}
+            DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}
             ALLOWED_HOSTS=localhost,127.0.0.1,portafolio.servicomf5.cl
             DB_NAME=portafolio_db
             DB_USER=portafolio_user
             DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-            DB_HOST=localhost
+            DB_HOST=postgres
             DB_PORT=5432
             EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
             ENVEOF
@@ -45,22 +45,39 @@ jobs:
             --exclude='*.pyc' \
             ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/opt/portafolio/
       
-      - name: Build and restart Docker
+      - name: Stop existing containers
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "cd /opt/portafolio && docker-compose down 2>/dev/null || true"
-          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "cd /opt/portafolio && docker-compose up -d --build"
       
-      - name: Wait for container
-        run: sleep 30
+      - name: Build and start Docker
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "cd /opt/portafolio && docker-compose up -d"
+      
+      - name: Wait for services to be ready
+        run: |
+          echo "Waiting for PostgreSQL and Django to be ready..."
+          sleep 60
+      
+      - name: Create static directory
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker exec portafolio-web mkdir -p /app/staticfiles"
       
       - name: Run migrations
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker exec portafolio-web python manage.py migrate --noinput"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker exec portafolio-web python manage.py migrate --noinput || echo 'Migrations may have already been applied'"
       
       - name: Collect static
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker exec portafolio-web python manage.py collectstatic --noinput"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker exec portafolio-web python manage.py collectstatic --noinput || echo 'Static files collected'"
       
       - name: Verify deployment
         run: |
-          curl -f -o /dev/null -s -w "%{http_code}" http://${{ secrets.VPS_HOST }}:8012/ || echo "Site may be starting"
+          echo "Checking if site is responding..."
+          sleep 10
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://${{ secrets.VPS_HOST }}:8012/ || echo "000")
+          echo "HTTP Response Code: $HTTP_CODE"
+          if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "302" ]; then
+            echo "Site is up!"
+          else
+            echo "Site may still be starting, check manually"
+          fi

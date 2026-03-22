@@ -8,16 +8,17 @@ services:
       - "8012:8000"
     environment:
       - DEBUG=False
-      - SECRET_KEY=${SECRET_KEY:-django-insecure-change-in-production}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY:-django-insecure-change-in-production}
       - ALLOWED_HOSTS=${ALLOWED_HOSTS:-localhost,127.0.0.1,portafolio.servicomf5.cl}
       - DB_NAME=${DB_NAME:-portafolio_db}
       - DB_USER=${DB_USER:-portafolio_user}
       - DB_PASSWORD=${DB_PASSWORD:-portafolio_password}
-      - DB_HOST=${DB_HOST:-postgres}
-      - DB_PORT=${DB_PORT:-5432}
-      - EMAIL_BACKEND=${EMAIL_BACKEND:-django.core.mail.backends.console.EmailBackend}
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     restart: unless-stopped
     volumes:
       - static_volume:/app/staticfiles
@@ -35,6 +36,12 @@ services:
     ports:
       - "5434:5432"
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-portafolio_user} -d ${DB_NAME:-portafolio_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
 volumes:
   postgres_data:

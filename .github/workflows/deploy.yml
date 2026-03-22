@@ -18,23 +18,49 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
       
+      - name: Create .env file
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "
+            mkdir -p /opt/portafolio
+            cat > /opt/portafolio/.env << 'ENVEOF'
+            DEBUG=False
+            SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}
+            ALLOWED_HOSTS=localhost,127.0.0.1,portafolio.servicomf5.cl
+            DB_NAME=portafolio_db
+            DB_USER=portafolio_user
+            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            DB_HOST=localhost
+            DB_PORT=5432
+            EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
+            ENVEOF
+          "
+      
       - name: Upload files to VPS
         run: |
-          scp -o StrictHostKeyChecking=no -o BatchMode=yes -r * ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/opt/portafolio/
-          echo "Files uploaded successfully"
+          rsync -avz --delete \
+            -e "ssh -o StrictHostKeyChecking=no" \
+            --exclude='.env' \
+            --exclude='.git' \
+            --exclude='__pycache__' \
+            --exclude='*.pyc' \
+            ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/opt/portafolio/
       
-      - name: Notify
+      - name: Build and restart Docker
         run: |
-          echo "=========================================="
-          echo "¡Archivos subidos al VPS!"
-          echo ""
-          echo "Para completar el deploy, ejecuta en el VPS:"
-          echo "  cd /opt/portafolio"
-          echo "  docker-compose down"
-          echo "  docker-compose up -d --build"
-          echo "  docker exec portafolio-web python manage.py migrate --noinput"
-          echo "  docker exec portafolio-web python manage.py collectstatic --noinput"
-          echo ""
-          echo "O ejecuta el script de deploy:"
-          echo "  cd /opt/portafolio && bash deploy.sh"
-          echo "=========================================="
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "cd /opt/portafolio && docker-compose down 2>/dev/null || true"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "cd /opt/portafolio && docker-compose up -d --build"
+      
+      - name: Wait for container
+        run: sleep 30
+      
+      - name: Run migrations
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker exec portafolio-web python manage.py migrate --noinput"
+      
+      - name: Collect static
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker exec portafolio-web python manage.py collectstatic --noinput"
+      
+      - name: Verify deployment
+        run: |
+          curl -f -o /dev/null -s -w "%{http_code}" http://${{ secrets.VPS_HOST }}:8012/ || echo "Site may be starting"

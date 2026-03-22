@@ -22,17 +22,15 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "
             mkdir -p /opt/portafolio
-            cat > /opt/portafolio/.env << 'ENVEOF'
-            DEBUG=False
-            DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}
-            ALLOWED_HOSTS=localhost,127.0.0.1,portafolio.servicomf5.cl
-            DB_NAME=portafolio_db
-            DB_USER=portafolio_user
-            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-            DB_HOST=postgres
-            DB_PORT=5432
-            EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
-            ENVEOF
+            echo 'DEBUG=False' > /opt/portafolio/.env
+            echo 'DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}' >> /opt/portafolio/.env
+            echo 'ALLOWED_HOSTS=localhost,127.0.0.1,portafolio.servicomf5.cl' >> /opt/portafolio/.env
+            echo 'DB_NAME=portafolio_db' >> /opt/portafolio/.env
+            echo 'DB_USER=portafolio_user' >> /opt/portafolio/.env
+            echo 'DB_PASSWORD=${{ secrets.DB_PASSWORD }}' >> /opt/portafolio/.env
+            echo 'DB_HOST=postgres' >> /opt/portafolio/.env
+            echo 'DB_PORT=5432' >> /opt/portafolio/.env
+            echo 'EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend' >> /opt/portafolio/.env
           "
       
       - name: Upload files to VPS

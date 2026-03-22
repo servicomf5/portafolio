@@ -125,7 +125,9 @@
             {% regroup skills by category as category_list %}
             {% for category in category_list %}
             <div class="col-12 mb-4">
-                <h4 class="text-capitalize mb-3">{{ category.grouper }}</h4>
+                <h4 class="text-capitalize mb-3">
+                    {% if category.grouper == 'technical' %}Técnico{% elif category.grouper == 'soft' %}Habilidades Blandas{% elif category.grouper == 'tools' %}Herramientas{% else %}{{ category.grouper }}{% endif %}
+                </h4>
                 <div class="row">
                     {% for skill in category.list %}
                     <div class="col-6 col-md-3 mb-3 mb-sm-5">

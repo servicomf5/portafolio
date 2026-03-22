@@ -62,6 +62,11 @@ class Skill(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def category_display(self):
+        """Retorna el nombre visible de la categoría."""
+        return dict(self.CATEGORY_CHOICES).get(self.category, self.category)
+
 
 class Experience(models.Model):
     """Modelo para experiencia laboral y educación."""

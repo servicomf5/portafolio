@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contacto - Eduardo Muñoz{% endblock %}
+{% block body_class %}contact{% endblock %}
+
+{% block content %}
+<!-- Page Title Starts -->
+<section class="title-section text-left text-sm-center revealator-slideup revealator-once revealator-delay1">
+    <h1>CONTÁCTAME</h1>
+    <span class="title-bg">Contacto</span>
+</section>
+<!-- Page Title Ends -->
+
+<!-- Main Content Starts -->
+<section class="main-content revealator-slideup revealator-once revealator-delay1">
+    <div class="container">
+        <div class="row">
+            <!-- Left Side Starts -->
+            <div class="col-12 col-lg-4">
+                <h3 class="text-uppercase custom-title mb-0 ft-wt-600 pb-3">¡Hablemos!</h3>
+                <p class="open-sans-font mb-3">
+                    Estoy siempre abierto a discutir nuevos proyectos, ideas creativas u oportunidades de ser parte de tu visión.
+                </p>
+                <p class="open-sans-font custom-span-contact position-relative">
+                    <i class="fa fa-envelope-open position-absolute"></i>
+                    <span class="d-block">email</span>
+                    <a href="mailto:eduardomunoz.trabajo@gmail.com">eduardomunoz.trabajo@gmail.com</a>
+                </p>
+                {% if profile.phone %}
+                <p class="open-sans-font custom-span-contact position-relative">
+                    <i class="fa fa-phone-square position-absolute"></i>
+                    <span class="d-block">teléfono</span>
+                    {{ profile.phone }}
+                </p>
+                {% endif %}
+                <p class="open-sans-font custom-span-contact position-relative">
+                    <i class="fa fa-map-marker position-absolute"></i>
+                    <span class="d-block">ubicación</span>
+                    {{ profile.location|default:"La Serena, Chile" }}
+                </p>
+                <ul class="social list-unstyled pt-1 mb-5">
+                    {% if profile.linkedin %}
+                    <li class="linkedin">
+                        <a href="{{ profile.linkedin }}" target="_blank" title="LinkedIn">
+                            <i class="fa fa-linkedin"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if profile.github %}
+                    <li class="github">
+                        <a href="{{ profile.github }}" target="_blank" title="GitHub">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+            <!-- Left Side Ends -->
+
+            <!-- Contact Form Starts -->
+            <div class="col-12 col-lg-8">
+                {% if messages %}
+                <div class="alert alert-success" role="alert">
+                    {% for message in messages %}
+                    {{ message }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                <form class="contactform" method="post" action="{% url 'contact' %}">
+                    {% csrf_token %}
+                    <div class="contactform">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                {{ form.name }}
+                                {% if form.name.errors %}
+                                <div class="text-danger small">{{ form.name.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-12 col-md-4">
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                <div class="text-danger small">{{ form.email.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-12 col-md-4">
+                                {{ form.subject }}
+                                {% if form.subject.errors %}
+                                <div class="text-danger small">{{ form.subject.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                {{ form.message }}
+                                {% if form.message.errors %}
+                                <div class="text-danger small">{{ form.message.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="button">
+                                    <span class="button-text">Enviar mensaje</span>
+                                    <span class="button-icon fa fa-send"></span>
+                                </button>
+                            </div>
+                            {% if form.non_field_errors %}
+                            <div class="col-12 form-message">
+                                {% for error in form.non_field_errors %}
+                                <span class="output_message text-center font-weight-600 text-uppercase text-danger">
+                                    {{ error }}
+                                </span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Contact Form Ends -->
+        </div>
+    </div>
+</section>
+<!-- Main Content Ends -->
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.contactform input,
+.contactform textarea {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.contactform input:focus,
+.contactform textarea:focus {
+    outline: none;
+    border-color: #f9a826;
+}
+
+.social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #f9a826;
+    color: #fff;
+    margin-right: 10px;
+    transition: background 0.3s ease;
+}
+
+.social a:hover {
+    background: #333;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: portafolio-web
+    ports:
+      - "8012:8000"
+    environment:
+      - DEBUG=False
+      - SECRET_KEY=${SECRET_KEY:-django-insecure-change-in-production}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-localhost,127.0.0.1,portafolio.servicomf5.cl}
+      - DB_NAME=${DB_NAME:-portafolio_db}
+      - DB_USER=${DB_USER:-portafolio_user}
+      - DB_PASSWORD=${DB_PASSWORD:-portafolio_password}
+      - DB_HOST=${DB_HOST:-postgres}
+      - DB_PORT=${DB_PORT:-5432}
+      - EMAIL_BACKEND=${EMAIL_BACKEND:-django.core.mail.backends.console.EmailBackend}
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+
+  postgres:
+    image: postgres:17-alpine
+    container_name: portafolio-postgres
+    environment:
+      - POSTGRES_DB=${DB_NAME:-portafolio_db}
+      - POSTGRES_USER=${DB_USER:-portafolio_user}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-portafolio_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:

@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Eduardo Muñoz - Analista de Datos | Desarrollador Full Stack Python{% endblock %}
+
+{% block content %}
+<section class="container-fluid main-container container-home p-0 revealator-slideup revealator-once revealator-delay1">
+    <div class="color-block d-none d-lg-block"></div>
+    <div class="row home-details-container align-items-center">
+        <div class="col-lg-4 bg position-fixed d-none d-lg-block">
+            {% if profile.photo %}
+            <img src="{{ profile.photo.url }}" class="img-fluid main-img-mobile d-none d-sm-block d-lg-none profile-photo" alt="{{ profile.first_name }}">
+            {% endif %}
+        </div>
+        <div class="col-12 col-lg-8 offset-lg-4 home-details text-left text-sm-center text-lg-left">
+            <div>
+                {% if profile.photo %}
+                <img src="{{ profile.photo.url }}" class="img-fluid main-img-mobile d-none d-sm-block d-lg-none profile-photo" alt="{{ profile.first_name }}">
+                {% endif %}
+                <h1 class="text-uppercase poppins-font">
+                    {% if profile %}
+                    {{ profile.first_name }} <span>{{ profile.last_name }}</span>
+                    {% else %}
+                    Eduardo <span>Muñoz</span>
+                    {% endif %}
+                </h1>
+                <p class="open-sans-font">
+                    {% if profile %}
+                    {{ profile.title }}
+                    {% else %}
+                    Analista de Datos | Desarrollador Full Stack Python
+                    {% endif %}
+                </p>
+                {% if profile.bio %}
+                <p class="open-sans-font bio-text">{{ profile.bio|truncatewords:50 }}</p>
+                {% endif %}
+                <a class="button" href="{% url 'about' %}">
+                    <span class="button-text">Más sobre mí</span>
+                    <span class="button-icon fa fa-arrow-right"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if featured_projects %}
+<!-- Featured Projects Section -->
+<section class="main-content revealator-slideup revealator-once revealator-delay1">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="text-uppercase pb-4 pb-sm-5 mb-3 mb-sm-0 text-left text-sm-center custom-title ft-wt-600">
+                    Proyectos <span>Destacados</span>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            {% for project in featured_projects %}
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="project-card">
+                    {% if project.image %}
+                    <img src="{{ project.image.url }}" class="img-fluid" alt="{{ project.title }}">
+                    {% endif %}
+                    <div class="project-info">
+                        <h4>{{ project.title }}</h4>
+                        <p>{{ project.description|truncatewords:20 }}</p>
+                        <div class="project-tags">
+                            {% for tech in project.technologies|slice:":3" %}
+                            <span class="badge badge-primary">{{ tech|truncatechars:15 }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="project-links">
+                            {% if project.demo_url %}
+                            <a href="{{ project.demo_url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                <i class="fa fa-external-link"></i> Demo
+                            </a>
+                            {% endif %}
+                            {% if project.repo_url %}
+                            <a href="{{ project.repo_url }}" target="_blank" class="btn btn-sm btn-outline-secondary">
+                                <i class="fa fa-github"></i> Código
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <a href="{% url 'portfolio' %}" class="button">
+                    <span class="button-text">Ver todos los proyectos</span>
+                    <span class="button-icon fa fa-arrow-right"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<style>
+/* Profile photo with subtle opacity */
+.profile-photo {
+    opacity: 0.7;
+    filter: contrast(0.95);
+    transition: opacity 0.3s ease;
+}
+
+.profile-photo:hover {
+    opacity: 1;
+}
+
+/* Hero section adjustments */
+.home-details .bio-text {
+    margin-bottom: 1.5rem;
+    max-width: 600px;
+}
+
+/* Project cards */
+.project-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+}
+
+.project-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.project-info {
+    padding: 1.5rem;
+}
+
+.project-info h4 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.project-info p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.project-tags {
+    margin-bottom: 1rem;
+}
+
+.project-links {
+    display: flex;
+    gap: 0.5rem;
+}
+</style>
+{% endblock %}

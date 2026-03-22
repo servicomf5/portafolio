@@ -1,0 +1,366 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sobre Mí - Eduardo Muñoz{% endblock %}
+{% block body_class %}about{% endblock %}
+
+{% block content %}
+<!-- Page Title Starts -->
+<section class="title-section text-left text-sm-center revealator-slideup revealator-once revealator-delay1">
+    <h1>SOBRE <span>MÍ</span></h1>
+    <span class="title-bg">Resumen</span>
+</section>
+<!-- Page Title Ends -->
+
+<!-- Main Content Starts -->
+<section class="main-content revealator-slideup revealator-once revealator-delay1">
+    <div class="container">
+        <div class="row">
+            <!-- Personal Info Starts -->
+            <div class="col-12 col-lg-5 col-xl-6">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="text-uppercase custom-title mb-0 ft-wt-600">Información Personal</h3>
+                    </div>
+                    <div class="col-12 d-block d-sm-none">
+                        {% if profile.photo %}
+                        <img src="{{ profile.photo.url }}" class="img-fluid main-img-mobile profile-photo" alt="{{ profile.first_name }}">
+                        {% endif %}
+                    </div>
+                    <div class="col-6">
+                        <ul class="about-list list-unstyled open-sans-font">
+                            <li><span class="title">Nombre :</span> <span class="value">{{ profile.first_name }} {{ profile.last_name }}</span></li>
+                            <li><span class="title">Ubicación :</span> <span class="value">{{ profile.location }}</span></li>
+                            <li><span class="title">Email :</span> <span class="value">{{ profile.email }}</span></li>
+                            {% if profile.phone %}
+                            <li><span class="title">Teléfono :</span> <span class="value">{{ profile.phone }}</span></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <div class="col-6">
+                        <ul class="about-list list-unstyled open-sans-font">
+                            <li><span class="title">Título :</span> <span class="value">{{ profile.title }}</span></li>
+                            <li><span class="title">Idiomas :</span> <span class="value">{{ profile.languages }}</span></li>
+                            {% if profile.freelance_available %}
+                            <li><span class="title">Freelance :</span> <span class="value text-success">Disponible</span></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <ul class="list-inline social-links">
+                            {% if profile.linkedin %}
+                            <li class="list-inline-item">
+                                <a href="{{ profile.linkedin }}" target="_blank" class="btn btn-outline-primary">
+                                    <i class="fa fa-linkedin"></i> LinkedIn
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% if profile.github %}
+                            <li class="list-inline-item">
+                                <a href="{{ profile.github }}" target="_blank" class="btn btn-outline-dark">
+                                    <i class="fa fa-github"></i> GitHub
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% if profile.cv %}
+                            <li class="list-inline-item">
+                                <a href="{{ profile.cv.url }}" target="_blank" class="button">
+                                    <span class="button-text">Descargar CV</span>
+                                    <span class="button-icon fa fa-download"></span>
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Personal Info Ends -->
+
+            <!-- Stats Starts -->
+            <div class="col-12 col-lg-7 col-xl-6 mt-5 mt-lg-0">
+                <div class="row">
+                    {% if experiences %}
+                    <div class="col-6">
+                        <div class="box-stats with-margin">
+                            <h3 class="poppins-font position-relative">{{ experiences.count }}</h3>
+                            <p class="open-sans-font m-0 position-relative text-uppercase">Años de <span class="d-block">experiencia</span></p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if skills %}
+                    <div class="col-6">
+                        <div class="box-stats with-margin">
+                            <h3 class="poppins-font position-relative">{{ skills.count }}</h3>
+                            <p class="open-sans-font m-0 position-relative text-uppercase">Habilidades <span class="d-block">técnicas</span></p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if projects_count %}
+                    <div class="col-6">
+                        <div class="box-stats">
+                            <h3 class="poppins-font position-relative">{{ projects_count }}</h3>
+                            <p class="open-sans-font m-0 position-relative text-uppercase">Proyectos <span class="d-block">completados</span></p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="col-6">
+                        <div class="box-stats">
+                            <h3 class="poppins-font position-relative">17+</h3>
+                            <p class="open-sans-font m-0 position-relative text-uppercase">Años en <span class="d-block">logística</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Stats Ends -->
+        </div>
+
+        <hr class="separator">
+
+        <!-- Skills Section -->
+        {% if skills %}
+        <div class="row">
+            <div class="col-12">
+                <h3 class="text-uppercase pb-4 pb-sm-5 mb-3 mb-sm-0 text-left text-sm-center custom-title ft-wt-600">Mis Habilidades</h3>
+            </div>
+            {% regroup skills by category as category_list %}
+            {% for category in category_list %}
+            <div class="col-12 mb-4">
+                <h4 class="text-capitalize mb-3">{{ category.grouper }}</h4>
+                <div class="row">
+                    {% for skill in category.list %}
+                    <div class="col-6 col-md-3 mb-3 mb-sm-5">
+                        <div class="c100 p{{ skill.percentage }}">
+                            <span>{{ skill.percentage }}%</span>
+                            <div class="slice">
+                                <div class="bar"></div>
+                                <div class="fill"></div>
+                            </div>
+                        </div>
+                        <h6 class="text-uppercase open-sans-font text-center mt-2 mt-sm-4">{{ skill.name }}</h6>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <hr class="separator mt-1">
+
+        <!-- Experience Section -->
+        {% if experiences %}
+        <div class="row">
+            <div class="col-12">
+                <h3 class="text-uppercase pb-5 mb-0 text-left text-sm-center custom-title ft-wt-600">Experiencia <span>&</span> Educación</h3>
+            </div>
+            <div class="col-lg-6 m-15px-tb">
+                <div class="resume-box">
+                    <ul>
+                        {% for exp in experiences %}
+                        {% if exp.type == 'work' %}
+                        <li>
+                            <div class="icon">
+                                <i class="fa fa-briefcase"></i>
+                            </div>
+                            <span class="time open-sans-font text-uppercase">{{ exp.duration }}</span>
+                            <h5 class="poppins-font text-uppercase">{{ exp.title }} <span class="place open-sans-font">{{ exp.company }}</span></h5>
+                            {% if exp.location %}<p class="text-muted small">{{ exp.location }}</p>{% endif %}
+                            {% if exp.description %}<p class="open-sans-font">{{ exp.description }}</p>{% endif %}
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-6 m-15px-tb">
+                <div class="resume-box">
+                    <ul>
+                        {% for exp in experiences %}
+                        {% if exp.type == 'education' %}
+                        <li>
+                            <div class="icon">
+                                <i class="fa fa-graduation-cap"></i>
+                            </div>
+                            <span class="time open-sans-font text-uppercase">{{ exp.duration }}</span>
+                            <h5 class="poppins-font text-uppercase">{{ exp.title }} <span class="place open-sans-font">{{ exp.company }}</span></h5>
+                            {% if exp.description %}<p class="open-sans-font">{{ exp.description }}</p>{% endif %}
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- FODA Section -->
+{% if foda %}
+<section class="main-content revealator-slideup revealator-once revealator-delay1" style="background-color: #f8f9fa;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="text-uppercase pb-4 pb-sm-5 mb-3 mb-sm-0 text-left text-sm-center custom-title ft-wt-600">Análisis <span>FODA</span></h3>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Fortalezas -->
+            <div class="col-md-6 mb-4">
+                <div class="foda-card foda-strengths">
+                    <h4 class="text-success"><i class="fa fa-arrow-up"></i> Fortalezas</h4>
+                    <ul class="list-unstyled">
+                        {% for item in foda.get_fortalezas_list %}
+                        <li><i class="fa fa-check text-success mr-2"></i>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <!-- Oportunidades -->
+            <div class="col-md-6 mb-4">
+                <div class="foda-card foda-opportunities">
+                    <h4 class="text-info"><i class="fa fa-lightbulb-o"></i> Oportunidades</h4>
+                    <ul class="list-unstyled">
+                        {% for item in foda.get_oportunidades_list %}
+                        <li><i class="fa fa-star text-info mr-2"></i>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <!-- Debilidades -->
+            <div class="col-md-6 mb-4">
+                <div class="foda-card foda-weaknesses">
+                    <h4 class="text-warning"><i class="fa fa-arrow-down"></i> Debilidades</h4>
+                    <ul class="list-unstyled">
+                        {% for item in foda.get_debilidades_list %}
+                        <li><i class="fa fa-edit text-warning mr-2"></i>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <!-- Amenazas -->
+            <div class="col-md-6 mb-4">
+                <div class="foda-card foda-threats">
+                    <h4 class="text-danger"><i class="fa fa-exclamation-triangle"></i> Amenazas</h4>
+                    <ul class="list-unstyled">
+                        {% for item in foda.get_amenazas_list %}
+                        <li><i class="fa fa-exclamation-circle text-danger mr-2"></i>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Company Research Section -->
+{% if company %}
+<section class="main-content revealator-slideup revealator-once revealator-delay1">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="text-uppercase pb-4 pb-sm-5 mb-3 mb-sm-0 text-left text-sm-center custom-title ft-wt-600">Empresa <span>Objetivo</span></h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="company-card">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h4>{{ company.company_name }}</h4>
+                        <a href="{{ company.company_url }}" target="_blank" class="btn btn-outline-primary">
+                            <i class="fa fa-external-link"></i> Visitar sitio
+                        </a>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5><i class="fa fa-code"></i> Tecnologías</h5>
+                            <div class="tech-tags mb-4">
+                                {% for tech in company.get_technologies_list %}
+                                <span class="badge badge-dark">{{ tech }}</span>
+                                {% endfor %}
+                            </div>
+                            
+                            <h5><i class="fa fa-gears"></i> Metodologías</h5>
+                            <p>{{ company.methodologies }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5><i class="fa fa-rocket"></i> Innovación</h5>
+                            <p>{{ company.innovation }}</p>
+                            
+                            <h5><i class="fa fa-gift"></i> ¿Cómo puedo aportar?</h5>
+                            <ul>
+                                {% for way in company.get_contribution_ways_list %}
+                                <li>{{ way }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <h5><i class="fa fa-question-circle"></i> Preguntas para la entrevista</h5>
+                            <ol>
+                                {% for question in company.get_interview_questions_list %}
+                                <li>{{ question }}</li>
+                                {% endfor %}
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+<!-- Main Content Ends -->
+{% endblock %}
+
+{% block extra_css %}
+<style>
+/* Profile photo subtle */
+.profile-photo {
+    opacity: 0.7;
+    filter: contrast(0.95);
+}
+
+/* FODA Cards */
+.foda-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.foda-card h4 {
+    border-bottom: 2px solid currentColor;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.foda-card li {
+    padding: 0.25rem 0;
+}
+
+/* Company Card */
+.company-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.tech-tags .badge {
+    margin: 0.25rem;
+    font-size: 0.85rem;
+}
+
+/* Social links */
+.social-links {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+</style>
+{% endblock %}

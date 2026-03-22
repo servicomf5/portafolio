@@ -2,6 +2,7 @@ from django.core.mail import send_mail
 from django.views.generic import FormView
 from django.contrib import messages
 from django.urls import reverse_lazy
+from django.conf import settings
 from .forms import ContactForm
 
 
@@ -28,12 +29,13 @@ De: {name} <{email}>
 {message}
 """
 
-        # Enviar email
+        # Enviar email al destino configurado
+        recipient = getattr(settings, "CONTACT_EMAIL", "eduardomunoz.trabajo@gmail.com")
         send_mail(
             subject=f"[Portafolio Contacto] {subject}",
             message=email_body,
-            from_email=None,  # Usa DEFAULT_FROM_EMAIL
-            recipient_list=["eduardomunoz.trabajo@gmail.com"],
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[recipient],
             fail_silently=False,
         )
 

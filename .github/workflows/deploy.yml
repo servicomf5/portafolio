@@ -37,6 +37,7 @@ jobs:
             echo 'EMAIL_HOST_USER=no-reply@servicomf5.cl' >> /opt/portafolio/.env
             echo 'EMAIL_HOST_PASSWORD=${{ secrets.EMAIL_PASSWORD }}' >> /opt/portafolio/.env
             echo 'DEFAULT_FROM_EMAIL=no-reply@servicomf5.cl' >> /opt/portafolio/.env
+            echo 'CONTACT_EMAIL=eduardomunoz.trabajo@gmail.com' >> /opt/portafolio/.env
           "
       
       - name: Upload files to VPS

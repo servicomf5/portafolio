@@ -1,10 +1,11 @@
 """
 Django settings for portafolio project.
 """
+
 import os
-import django.contrib import admin
 from pathlib import Path
 from dotenv import load_dotenv
+from django.contrib import admin
 
 # Load .env file
 load_dotenv()
@@ -13,7 +14,7 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-cambiar-en-produccion")
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-cambiar-en-produccion")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "True").lower() in ("true", "1", "yes")

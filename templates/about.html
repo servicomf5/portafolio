@@ -108,17 +108,15 @@
                     {% if experiences_count > 0 %}
                     <div class="col-6">
                         <div class="box-stats">
-                            <h3 class="poppins-font position-relative">
-                                {% with first_exp=experiences.0 %}{% if first_exp.start_date %}{{ first_exp.start_date|date:"Y" }}{% else %}0{% endif }}{% endwith %}
-                            </h3>
-                            <p class="open-sans-font m-0 position-relative text-uppercase">Años de <span class="d-block">experiencia</span></p>
+                            <h3 class="poppins-font position-relative">{{ experiences_count }}</h3>
+                            <p class="open-sans-font m-0 position-relative text-uppercase">Experiencias <span class="d-block">registradas</span></p>
                         </div>
                     </div>
                     {% else %}
                     <div class="col-6">
                         <div class="box-stats">
                             <h3 class="poppins-font position-relative">0</h3>
-                            <p class="open-sans-font m-0 position-relative text-uppercase">Años de <span class="d-block">experiencia</span></p>
+                            <p class="open-sans-font m-0 position-relative text-uppercase">Experiencias <span class="d-block">registradas</span></p>
                         </div>
                     </div>
                     {% endif %}

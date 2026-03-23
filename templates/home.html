@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{% if profile %}
-                    {{ profile.first_name }} {{ profile.last_name }} - {{ profile.title }}
-                    {% else %}Mi Portafolio{% endif %}{% endblock %}
+{% block title %}{% if profile %}{{ profile.first_name }} {{ profile.last_name }} - {{ profile.title }}
+{% else %}Mi Portafolio{% endif %}{% endblock %}
 
 {% block content %}
 <section class="container-fluid main-container container-home p-0 revealator-slideup revealator-once revealator-delay1">

@@ -2,111 +2,39 @@
 {% load static %}
 
 {% block title %}Portafolio - {% if profile %}{{ profile.first_name }} {{ profile.last_name }}{% else %}Mi Portfolio{% endif %}{% endblock %}
+{% block body_class %}portfolio{% endblock %}
 
-{% block content %}
-<!-- Page Title -->
-<section class="title-section text-left text-sm-center revealator-slideup revealator-once revealator-delay1">
-    <h1 style="color: #333;">MI <span>PORTFOLIO</span></h1>
-    <span class="title-bg">Proyectos</span>
-</section>
-
-<!-- Main Content -->
-<section class="main-content revealator-slideup revealator-once revealator-delay1">
-    <div class="container">
-        
-        <!-- Case Study -->
-        {% if case_study %}
-        <div class="row mb-5">
-            <div class="col-12">
-                <h3 class="text-uppercase pb-4 mb-4 custom-title ft-wt-600" style="color: #333;">
-                    <i class="fa fa-book"></i> Caso de <span>Estudio</span>
-                </h3>
-                <div class="case-study-card">
-                    <h2 style="color: #333;">{{ case_study.title }}</h2>
-                    <p class="lead" style="color: #555;">{{ case_study.description }}</p>
-                    
-                    <div class="row mt-4">
-                        <div class="col-md-6">
-                            <div style="background: #f8f8f8; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                                <h5 style="color: #333; margin-bottom: 10px;">🎯 Desafío</h5>
-                                <p style="color: #555;">{{ case_study.challenge }}</p>
-                            </div>
-                            <div style="background: #f8f8f8; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                                <h5 style="color: #333; margin-bottom: 10px;">💡 Solución</h5>
-                                <p style="color: #555;">{{ case_study.solution }}</p>
-                            </div>
-                            <div style="background: #f8f8f8; padding: 15px; border-radius: 8px;">
-                                <h5 style="color: #333; margin-bottom: 10px;">🔧 Herramientas</h5>
-                                <p style="color: #555;">{{ case_study.tools }}</p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div style="background: #f8f8f8; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                                <h5 style="color: #333; margin-bottom: 10px;">📊 Métricas</h5>
-                                <p style="color: #555; white-space: pre-line;">{{ case_study.metrics }}</p>
-                            </div>
-                            <div style="background: #f8f8f8; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                                <h5 style="color: #333; margin-bottom: 10px;">📚 Aprendizajes</h5>
-                                <p style="color: #555;">{{ case_study.learnings }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endif %}
-
-        <!-- Projects Grid -->
-        <div class="row">
-            <div class="col-12">
-                <h3 class="text-uppercase pb-4 mb-4 custom-title ft-wt-600" style="color: #333;">
-                    Mis <span>Proyectos</span>
-                </h3>
-            </div>
-        </div>
-        
-        <div class="row">
-            {% for project in projects %}
-            <div class="col-md-4 mb-4">
-                <div class="project-card" style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
-                    {% if project.image %}
-                    <div style="background: #1a1a1a; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center;">
-                        <img src="{{ project.image.url }}" alt="{{ project.title }}" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    {% else %}
-                    <div style="background: #1a1a1a; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; color: #666;">
-                        <i class="fa fa-image fa-3x"></i>
-                    </div>
-                    {% endif %}
-                    <div style="padding: 20px;">
-                        <h4 style="color: #333; margin-bottom: 10px;">{{ project.title }}</h4>
-                        <p style="color: #666; font-size: 0.9rem; margin-bottom: 15px;">{{ project.description|truncatewords:20 }}</p>
-                        <div style="margin-bottom: 15px; color: #666; font-size: 0.85rem;">
-                            {{ project.technologies }}
-                        </div>
-                        <div>
-                            {% if project.demo_url %}
-                            <a href="{{ project.demo_url }}" target="_blank" style="color: #0066cc; margin-right: 15px;">
-                                <i class="fa fa-external-link"></i> Demo
-                            </a>
-                            {% endif %}
-                            {% if project.repo_url %}
-                            <a href="{{ project.repo_url }}" target="_blank" style="color: #333;">
-                                <i class="fa fa-github"></i> Código
-                            </a>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% empty %}
-            <div class="col-12">
-                <p style="color: #666; text-align: center; padding: 40px;">No hay proyectos disponibles.</p>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/portfolio-modal.css' %}">
+<style>
+/* Forzar estilos del modal con mayor especificidad */
+body .cbp-popup-content, 
+html body .cbp-popup-content,
+.cbp-popup-lightbox .cbp-popup-content,
+.cbp-popup-singlePage .cbp-popup-content {
+    background: #333 !important;
+    color: #eee !important;
+    max-height: 80vh !important;
+    overflow-y: auto !important;
+    padding: 20px !important;
+}
+body .cbp-popup-wrap,
+html body .cbp-popup-wrap {
+    background: rgba(20,20,20,0.95) !important;
+}
+body .cbp-popup-lightbox,
+html body .cbp-popup-lightbox {
+    background: rgba(0,0,0,0.95) !important;
+}
+.cbp-popup-figcaption {
+    background: #333 !important;
+    color: #eee !important;
+    padding: 15px !important;
+}
+.cbp-popup-figcaption * {
+    color: #ddd !important;
+}
+</style>
 {% endblock %}
 
 {% block content %}

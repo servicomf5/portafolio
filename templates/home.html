@@ -10,15 +10,15 @@
     <div class="row home-details-container align-items-center">
         <div class="col-lg-4 bg position-fixed d-none d-lg-block">
             {% if profile.photo %}
-            <img src="{{ profile.photo.url }}" class="img-fluid main-img-mobile d-none d-sm-block d-lg-none profile-photo" alt="{{ profile.first_name }}">
+            <img src="{{ profile.photo.url }}" class="img-fluid main-img-mobile profile-photo" alt="{{ profile.first_name }}">
             {% endif %}
         </div>
         <div class="col-12 col-lg-8 offset-lg-4 home-details text-left text-sm-center text-lg-left">
             <div>
                 {% if profile.photo %}
-                <img src="{{ profile.photo.url }}" class="img-fluid main-img-mobile d-none d-sm-block d-lg-none profile-photo" alt="{{ profile.first_name }}">
+                <img src="{{ profile.photo.url }}" class="img-fluid main-img-mobile d-block d-sm-none profile-photo mb-3" alt="{{ profile.first_name }}">
                 {% endif %}
-<h1 class="text-uppercase poppins-font">
+                <h1 class="text-uppercase poppins-font">
                     {% if profile %}{{ profile.first_name }} {{ profile.last_name }}{% else %}Mi Portfolio{% endif %}
                 </h1>
                 <p class="open-sans-font">

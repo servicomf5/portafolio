@@ -8,7 +8,7 @@
 {% block content %}
 <!-- Page Title Starts -->
 <section class="title-section text-left text-sm-center revealator-slideup revealator-once revealator-delay1">
-    <h1>MI <span>PORTFOLIO</span></h1>
+    <h1 style="color: #333;">MI <span>PORTFOLIO</span></h1>
     <span class="title-bg">Proyectos</span>
 </section>
 <!-- Page Title Ends -->
@@ -18,11 +18,11 @@
 
     <!-- Case Study Section -->
     {% if case_study %}
-    <div class="container-fluid case-study-section" style="background-color: #f8f9fa;">
+    <div class="container-fluid case-study-section" style="background-color: #f8f9fa; padding-top: 3rem;">
         <div class="container py-5">
             <div class="row">
                 <div class="col-12">
-                    <h3 class="text-uppercase pb-4 mb-4 text-left custom-title ft-wt-600">
+                    <h3 class="text-uppercase pb-4 mb-4 text-left custom-title ft-wt-600" style="color: #333;">
                         <i class="fa fa-book"></i> Caso de <span>Estudio</span>
                     </h3>
                 </div>
@@ -53,11 +53,9 @@
                             <div class="col-md-6">
                                 <div class="case-study-section">
                                     <h4><i class="fa fa-line-chart"></i> Métricas de Impacto</h4>
-                                    <ul>
-                                        {% for metric in case_study.metrics|linebreaks|truncatewords_html:100 %}
-                                        <li>{{ metric }}</li>
-                                        {% endfor %}
-                                    </ul>
+                                    <div style="color: #555; line-height: 1.8;">
+                                        {{ case_study.metrics|linebreaks }}
+                                    </div>
                                 </div>
 
                                 <div class="case-study-section">
@@ -118,7 +116,7 @@
                         <!-- Project Details Starts -->
                         <figcaption>
                             <h3>{{ project.title }}</h3>
-                            <div class="row open-sans-font">
+                                <div class="row open-sans-font" style="color: #555;">
                                 <div class="col-12 col-sm-6 mb-2">
                                     <i class="fa fa-file-text-o pr-2"></i><span class="project-label">Tipo: </span>
                                     <span class="ft-wt-600 uppercase">{{ project.get_project_type_display }}</span>
@@ -140,7 +138,7 @@
                                 </div>
                                 {% endif %}
                             </div>
-                            <p class="mt-3">{{ project.description }}</p>
+                            <p class="mt-3" style="color: #555;">{{ project.description }}</p>
                         </figcaption>
                         <!-- Project Details Ends -->
                         <!-- Main Project Content Starts -->
@@ -175,6 +173,7 @@
     border-radius: 12px;
     padding: 2rem;
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    color: #333;
 }
 
 .case-study-card h2 {
@@ -182,19 +181,31 @@
     margin-bottom: 0.5rem;
 }
 
+.case-study-card p {
+    color: #555;
+    line-height: 1.6;
+}
+
 .case-study-section {
     margin-bottom: 1.5rem;
 }
 
 .case-study-section h4 {
-    color: #666;
+    color: #444;
     font-size: 1rem;
     margin-bottom: 0.5rem;
+    font-weight: 600;
 }
 
 .case-study-section h4 i {
     margin-right: 0.5rem;
     color: #f9a826;
+}
+
+.case-study-section ul {
+    color: #555;
+    padding-left: 1.5rem;
+    line-height: 1.8;
 }
 
 /* Projects Grid */
@@ -214,6 +225,21 @@
     width: 100%;
     height: 200px;
     object-fit: cover;
+}
+
+/* Case Study Section Background */
+.case-study-section {
+    background: #fafafa;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.case-study-section h4 {
+    background: #fff;
+    padding: 0.5rem;
+    margin: -1rem -1rem 0.5rem -1rem;
+    border-radius: 8px 8px 0 0;
 }
 </style>
 {% endblock %}

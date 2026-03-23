@@ -94,16 +94,30 @@
 
 {% block extra_css %}
 <style>
-/* Profile photo - columna izquierda del home - mantener ubicación original */
+/* Profile photo - columna izquierda del home */
+.col-lg-4.bg.position-fixed {
+    background: transparent !important;
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .profile-photo {
+    width: 90%;
+    height: auto;
+    max-height: 85vh;
+    background-color: #1a1a1a;
+    object-fit: contain;
+    object-position: center center;
     opacity: 0.75;
-    filter: contrast(0.95);
-    transition: opacity 0.3s ease;
+    filter: contrast(1.05) saturate(0.9);
+    transition: all 0.3s ease;
     border-radius: 30px;
     -webkit-border-radius: 30px;
     -moz-border-radius: 30px;
-    background-color: #1a1a1a;
-    padding: 10px;
 }
 
 .profile-photo:hover {

@@ -1,0 +1,23 @@
+[
+  {
+    "model": "portfolio.profile",
+    "pk": 1,
+    "fields": {
+      "first_name": "Eduardo",
+      "last_name": "Muñoz",
+      "title": "Analista de Datos | Desarrollador Full Stack Python",
+      "subtitle": "Transformando datos en decisiones estratégicas",
+      "bio": "Profesional con más de 17 años de experiencia en logística y supply chain, actualmente en transición hacia el análisis de datos y desarrollo Python. Apasionado por resolver problemas complejos mediante código y visualizar información que impulse decisiones de negocio.",
+      "photo": "profile/foto_perfil.jpg",
+      "cv": "cv/CV.pdf",
+      "email": "eduardomunoz.trabajo@gmail.com",
+      "phone": "+56 9 1234 5678",
+      "location": "Santiago, Chile",
+      "linkedin": "https://linkedin.com/in/eduardomunoz",
+      "github": "https://github.com/eduardomunoz",
+      "skype": "",
+      "languages": "Español, Inglés",
+      "freelance_available": true
+    }
+  }
+]

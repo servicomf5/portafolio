@@ -1,0 +1,50 @@
+[
+  {
+    "model": "projects.project",
+    "pk": 1,
+    "fields": {
+      "title": "API REST de Gestión de Tareas",
+      "slug": "api-gestion-tareas",
+      "description": "Desarrollo de una API REST completa para gestión de proyectos y tareas con autenticación JWT, documentación con Swagger y despliegue en contenedor Docker.",
+      "project_type": "bootcamp",
+      "technologies": "Python, Django, DRF, PostgreSQL, Docker, JWT, Swagger",
+      "demo_url": "",
+      "repo_url": "https://github.com/eduardomunoz/api-tareas",
+      "image": "projects/api_tareas.jpg",
+      "featured": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 2,
+    "fields": {
+      "title": "Dashboard de Análisis de Ventas",
+      "slug": "dashboard-ventas",
+      "description": "Aplicación web para visualización de métricas de ventas con gráficos interactivos, filtros dinámicos y exportación de reportes.",
+      "project_type": "bootcamp",
+      "technologies": "Python, Django, Chart.js, PostgreSQL, Bootstrap",
+      "demo_url": "",
+      "repo_url": "https://github.com/eduardomunoz/dashboard-ventas",
+      "image": "projects/dashboard.jpg",
+      "featured": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 3,
+    "fields": {
+      "title": "Sistema de Inventario para PyMEs",
+      "slug": "sistema-inventario",
+      "description": "Sistema de gestión de inventario con alertas de stock mínimo, histórico de movimientos y generación de órdenes de compra.",
+      "project_type": "private",
+      "technologies": "Python, Django, PostgreSQL, Bootstrap, jQuery",
+      "demo_url": "",
+      "repo_url": "",
+      "image": "projects/inventario.jpg",
+      "featured": true,
+      "order": 3
+    }
+  }
+]

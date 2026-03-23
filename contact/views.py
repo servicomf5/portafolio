@@ -3,6 +3,7 @@ from django.views.generic import FormView
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.conf import settings
+from portfolio.models import Profile
 from .forms import ContactForm
 
 
@@ -13,6 +14,12 @@ class ContactView(FormView):
     form_class = ContactForm
     success_url = reverse_lazy("contact")
 
+    def get_context_data(self, **kwargs):
+        """Agrega el perfil al contexto."""
+        context = super().get_context_data(**kwargs)
+        context["profile"] = Profile.objects.first()
+        return context
+
     def form_valid(self, form):
         """Envía el email cuando el formulario es válido."""
         name = form.cleaned_data["name"]
@@ -20,9 +27,15 @@ class ContactView(FormView):
         subject = form.cleaned_data.get("subject", "Sin asunto")
         message = form.cleaned_data["message"]
 
+        # Obtener nombre del propietario del portafolio
+        profile = Profile.objects.first()
+        owner_name = (
+            f"{profile.first_name} {profile.last_name}" if profile else "el propietario"
+        )
+
         # Construir el cuerpo del email
         email_body = f"""
-Mensaje desde el portafolio de Eduardo Muñoz.
+Mensaje desde el portafolio de {owner_name}.
 
 De: {name} <{email}>
 
@@ -30,7 +43,7 @@ De: {name} <{email}>
 """
 
         # Enviar email al destino configurado
-        recipient = getattr(settings, "CONTACT_EMAIL", "eduardomunoz.trabajo@gmail.com")
+        recipient = getattr(settings, "CONTACT_EMAIL", "email@ejemplo.com")
         send_mail(
             subject=f"[Portafolio Contacto] {subject}",
             message=email_body,

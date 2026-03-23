@@ -1,0 +1,58 @@
+[
+  {
+    "model": "portfolio.experience",
+    "pk": 1,
+    "fields": {
+      "type": "work",
+      "title": "Jefe de Abastecimiento",
+      "company": "ServiCom F5 SpA",
+      "location": "Santiago, Chile",
+      "start_date": "2019-01-01",
+      "end_date": null,
+      "description": "Gestión integral del área de compras y abastecimiento. Negociación con proveedores, control de inventarios, optimización de procesos logísticos y reducción de costos operativos.",
+      "order": 1
+    }
+  },
+  {
+    "model": "portfolio.experience",
+    "pk": 2,
+    "fields": {
+      "type": "work",
+      "title": "Analista de Supply Chain",
+      "company": "Empresa de Retail",
+      "location": "Santiago, Chile",
+      "start_date": "2015-03-01",
+      "end_date": "2018-12-31",
+      "description": "Análisis de demanda, planificación de inventarios, coordinación con proveedores y seguimiento de métricas de servicio.",
+      "order": 2
+    }
+  },
+  {
+    "model": "portfolio.experience",
+    "pk": 3,
+    "fields": {
+      "type": "education",
+      "title": "Bootcamp Python Full Stack",
+      "company": "Coding Dojo Chile",
+      "location": "Santiago, Chile",
+      "start_date": "2024-06-01",
+      "end_date": "2024-11-30",
+      "description": "Programa intensivo de 800+ horas en desarrollo Python, Django, PostgreSQL, HTML/CSS/JS, Git y metodologías ágiles.",
+      "order": 3
+    }
+  },
+  {
+    "model": "portfolio.experience",
+    "pk": 4,
+    "fields": {
+      "type": "education",
+      "title": "Ingeniero Comercial",
+      "company": "Universidad de Chile",
+      "location": "Santiago, Chile",
+      "start_date": "2005-03-01",
+      "end_date": "2012-12-31",
+      "description": "Carrera profesional enfocada en gestión empresarial, análisis financiero y operaciones.",
+      "order": 4
+    }
+  }
+]

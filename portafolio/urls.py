@@ -12,7 +12,7 @@ from django.urls import re_path
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("portfolio.urls")),
-    path("projects/", include("projects.urls")),
+    path("portfolio/", include("projects.urls")),
     path("content/", include("content.urls")),
     path("contact/", include("contact.urls")),
 ]

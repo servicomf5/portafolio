@@ -3,19 +3,20 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}Eduardo Muñoz - Portfolio{% endblock %}</title>
-    <meta name="description" content="Portfolio profesional de Eduardo Andrés Muñoz Muñoz - Analista de Datos y Desarrollador Full Stack Python">
-    
+    <title>{% block title %}{% if profile %}{{ profile.first_name }} {{ profile.last_name }} - {{ profile.title }}
+        {% else %}Mi Portafolio{% endif %}{% endblock %}</title>
+    <meta name="description" content="{% if profile %}{{ profile.title }}{% else %}Portfolio profesional{% endif %}">
+
     {% load static %}
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
     <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
-    
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,600i,700" rel="stylesheet">
-    
+
     <!-- Template CSS Files -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/preloader.min.css' %}" rel="stylesheet">
@@ -23,17 +24,17 @@
     <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/fm.revealator.jquery.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
-    
+
     <!-- CSS Skin File -->
     <link href="{% static 'css/skins/yellow.css' %}" rel="stylesheet">
-    
+
     <!-- Modernizr JS File -->
     <script src="{% static 'js/modernizr.custom.js' %}"></script>
-    
+
     {% block extra_css %}{% endblock %}
 </head>
 <body class="{% block body_class %}home{% endblock %}">
-    
+
     <!-- Header Starts -->
     <header class="header" id="navbar-collapse-toggle">
         <!-- Fixed Navigation Starts -->
@@ -47,13 +48,13 @@
             <li class="icon-box {% if '/about' in request.path %}active{% endif %}">
                 <i class="fa fa-user"></i>
                 <a href="{% url 'about' %}">
-                    <h2>Sobre Mí</h2>
+                    <h2>Sobre&nbsp;Mí</h2>
                 </a>
             </li>
             <li class="icon-box {% if '/portfolio' in request.path %}active{% endif %}">
                 <i class="fa fa-briefcase"></i>
                 <a href="{% url 'portfolio' %}">
-                    <h2>Portfolio</h2>
+                    <h2>Portafolio</h2>
                 </a>
             </li>
             <li class="icon-box {% if '/contact' in request.path %}active{% endif %}">
@@ -76,10 +77,10 @@
                         <a href="{% url 'home' %}"><i class="fa fa-home"></i><span>Inicio</span></a>
                     </li>
                     <li class="{% if '/about' in request.path %}active{% endif %}">
-                        <a href="{% url 'about' %}"><i class="fa fa-user"></i><span>Sobre Mí</span></a>
+                        <a href="{% url 'about' %}"><i class="fa fa-user"></i><span>&nbsp;Mí</span></a>
                     </li>
                     <li class="{% if '/portfolio' in request.path %}active{% endif %}">
-                        <a href="{% url 'portfolio' %}"><i class="fa fa-folder-open"></i><span>Portfolio</span></a>
+                        <a href="{% url 'portfolio' %}"><i class="fa fa-folder-open"></i><span>Portafolio</span></a>
                     </li>
                     <li class="{% if '/contact' in request.path %}active{% endif %}">
                         <a href="{% url 'contact' %}"><i class="fa fa-envelope-open"></i><span>Contacto</span></a>
@@ -90,13 +91,13 @@
         <!-- Mobile Menu Ends -->
     </header>
     <!-- Header Ends -->
-    
+
     <!-- Main Content Starts -->
     <main>
         {% block content %}{% endblock %}
     </main>
     <!-- Main Content Ends -->
-    
+
     <!-- Template JS Files -->
     <script src="{% static 'js/jquery-3.5.0.min.js' %}"></script>
     <script src="{% static 'js/preloader.min.js' %}"></script>
@@ -109,7 +110,7 @@
     <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.js' %}"></script>
     <script src="{% static 'js/custom.js' %}"></script>
-    
+
     {% block extra_js %}{% endblock %}
 </body>
 </html>

@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Contacto - Eduardo Muñoz{% endblock %}
+{% block title %}Contacto - {% if profile %}{{ profile.first_name }} {{ profile.last_name }}
+{% else %}Mi Portfolio{% endif %}{% endblock %}
 {% block body_class %}contact{% endblock %}
 
 {% block content %}
@@ -25,7 +26,7 @@
                 <p class="open-sans-font custom-span-contact position-relative">
                     <i class="fa fa-envelope-open position-absolute"></i>
                     <span class="d-block">email</span>
-                    <a href="mailto:eduardomunoz.trabajo@gmail.com">eduardomunoz.trabajo@gmail.com</a>
+                    <a href="mailto:{% if profile %}{{ profile.email }}{% else %}email@ejemplo.com{% endif %}">{% if profile %}{{ profile.email }}{% else %}email@ejemplo.com{% endif %}</a>
                 </p>
                 {% if profile.phone %}
                 <p class="open-sans-font custom-span-contact position-relative">
@@ -37,7 +38,7 @@
                 <p class="open-sans-font custom-span-contact position-relative">
                     <i class="fa fa-map-marker position-absolute"></i>
                     <span class="d-block">ubicación</span>
-                    {{ profile.location|default:"La Serena, Chile" }}
+                    {% if profile %}{{ profile.location }}{% else %}Disponible para trabajo remoto{% endif %}
                 </p>
                 <ul class="social list-unstyled pt-1 mb-5">
                     {% if profile.linkedin %}
@@ -67,7 +68,7 @@
                     {% endfor %}
                 </div>
                 {% endif %}
-                
+
                 <form class="contactform" method="post" action="{% url 'contact' %}">
                     {% csrf_token %}
                     <div class="contactform">

@@ -1,0 +1,12 @@
+[
+  {
+    "model": "content.fodamatrix",
+    "pk": 1,
+    "fields": {
+      "fortalezas": "Más de 17 años de experiencia en logística y supply chain\nConocimiento profundo de procesos de negocio\nCapacidad analítica desarrollada\nExperiencia en gestión de equipos y proveedores\nConocimiento en Python y Django\nOrientación a resultados y resolución de problemas",
+      "debilidades": "Experiencia limitada en desarrollo web moderno (React, Vue)\nNecesidad de fortalecer conocimientos en machine learning\nCarencia de proyectos formales en data science\nCurva de aprendizaje en metodologías ágiles de desarrollo",
+      "oportunidades": "Alta demanda de desarrolladores Python en el mercado\nCrecimiento del área de datos en todas las industrias\nPosibilidad de combinar experiencia logística con analytics\nBootcamp que certifica habilidades técnicas\nSantiago como hub tecnológico regional",
+      "amenazas": "Competencia con desarrolladores más jóvenes\nRápida evolución de tecnologías requiere actualización constante\nMercado laboral cambiante con nuevas herramientas\nPresión salarial en mercados emergentes"
+    }
+  }
+]

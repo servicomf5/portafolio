@@ -1,0 +1,122 @@
+[
+  {
+    "model": "portfolio.skill",
+    "pk": 1,
+    "fields": {
+      "name": "Python",
+      "percentage": 90,
+      "category": "technical",
+      "order": 1
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 2,
+    "fields": {
+      "name": "Django",
+      "percentage": 85,
+      "category": "technical",
+      "order": 2
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 3,
+    "fields": {
+      "name": "PostgreSQL",
+      "percentage": 80,
+      "category": "technical",
+      "order": 3
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 4,
+    "fields": {
+      "name": "SQL",
+      "percentage": 85,
+      "category": "technical",
+      "order": 4
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 5,
+    "fields": {
+      "name": "Git",
+      "percentage": 80,
+      "category": "technical",
+      "order": 5
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 6,
+    "fields": {
+      "name": "Power BI",
+      "percentage": 75,
+      "category": "technical",
+      "order": 6
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 7,
+    "fields": {
+      "name": "Análisis de Datos",
+      "percentage": 85,
+      "category": "technical",
+      "order": 7
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 8,
+    "fields": {
+      "name": "Machine Learning",
+      "percentage": 70,
+      "category": "technical",
+      "order": 8
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 9,
+    "fields": {
+      "name": "Docker",
+      "percentage": 75,
+      "category": "tools",
+      "order": 9
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 10,
+    "fields": {
+      "name": "Linux",
+      "percentage": 70,
+      "category": "tools",
+      "order": 10
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 11,
+    "fields": {
+      "name": "Comunicación",
+      "percentage": 90,
+      "category": "soft",
+      "order": 11
+    }
+  },
+  {
+    "model": "portfolio.skill",
+    "pk": 12,
+    "fields": {
+      "name": "Resolución de Problemas",
+      "percentage": 85,
+      "category": "soft",
+      "order": 12
+    }
+  }
+]

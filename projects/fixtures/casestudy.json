@@ -1,0 +1,17 @@
+[
+  {
+    "model": "projects.casestudy",
+    "pk": 1,
+    "fields": {
+      "title": "Sistema de Predicción de Demanda para Cadena de Supermercados",
+      "description": "Desarrollo de modelo predictivo para Forecasting de ventas",
+      "challenge": "La empresa enfrentaba problemas de stock en productos de alta rotación y exceso de inventario en productos de baja rotación, resultando en pérdidas mensuales por más de $15.000.000.",
+      "solution": "Implementé un sistema de predicción de demanda utilizando Python, Pandas, Scikit-learn y Django. El modelo analiza datos históricos de ventas, estacionalidad, promociones y eventos externos para predecir demanda futura por producto y tienda.",
+      "tools": "Python, Pandas, Scikit-learn, Django, PostgreSQL, Docker, Chart.js, REST API",
+      "metrics": "Reducción del 23% en productos fuera de stock\nReducción del 18% en inventario obsoleto\nMejora del 15% en precisión de pronóstico\nAhorro estimado de $8.000.000 mensuales",
+      "learnings": "La calidad de los datos es más importante que la complejidad del modelo. Un modelo simple con datos limpios supera a modelos complejos con datos ruidosos. La interpretación del negocio es clave para validar resultados.",
+      "technical_skills": "Análisis exploratorio de datos, ETL, Feature Engineering, Modelos de Regresión y Series de Tiempo, SQL avanzado, Python, Django REST Framework, Despliegue en producción",
+      "justification": "Este proyecto combina mi experiencia en supply chain con las nuevas habilidades técnicas del bootcamp, demostrando la capacidad de identificar problemas de negocio y traducirlos en soluciones tecnológicas concretas."
+    }
+  }
+]

@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Sobre Mí - Eduardo Muñoz{% endblock %}
+{% block title %}Sobre Mí - {% if profile %}{{ profile.first_name }} {{ profile.last_name }}
+{% else %}Mi Portfolio{% endif %}{% endblock %}
 {% block body_class %}about{% endblock %}
 
 {% block content %}
@@ -103,12 +104,25 @@
                         </div>
                     </div>
                     {% endif %}
+                    {% with experiences_count=experiences|length %}
+                    {% if experiences_count > 0 %}
                     <div class="col-6">
                         <div class="box-stats">
-                            <h3 class="poppins-font position-relative">17+</h3>
-                            <p class="open-sans-font m-0 position-relative text-uppercase">Años en <span class="d-block">logística</span></p>
+                            <h3 class="poppins-font position-relative">
+                                {% with first_exp=experiences.0 %}{% if first_exp.start_date %}{{ first_exp.start_date|date:"Y" }}{% else %}0{% endif }}{% endwith %}
+                            </h3>
+                            <p class="open-sans-font m-0 position-relative text-uppercase">Años de <span class="d-block">experiencia</span></p>
                         </div>
                     </div>
+                    {% else %}
+                    <div class="col-6">
+                        <div class="box-stats">
+                            <h3 class="poppins-font position-relative">0</h3>
+                            <p class="open-sans-font m-0 position-relative text-uppercase">Años de <span class="d-block">experiencia</span></p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endwith %}
                 </div>
             </div>
             <!-- Stats Ends -->
@@ -274,7 +288,7 @@
                             <i class="fa fa-external-link"></i> Visitar sitio
                         </a>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-md-6">
                             <h5><i class="fa fa-code"></i> Tecnologías</h5>
@@ -283,14 +297,14 @@
                                 <span class="badge badge-dark">{{ tech }}</span>
                                 {% endfor %}
                             </div>
-                            
+
                             <h5><i class="fa fa-gears"></i> Metodologías</h5>
                             <p>{{ company.methodologies }}</p>
                         </div>
                         <div class="col-md-6">
                             <h5><i class="fa fa-rocket"></i> Innovación</h5>
                             <p>{{ company.innovation }}</p>
-                            
+
                             <h5><i class="fa fa-gift"></i> ¿Cómo puedo aportar?</h5>
                             <ul>
                                 {% for way in company.get_contribution_ways_list %}
@@ -299,7 +313,7 @@
                             </ul>
                         </div>
                     </div>
-                    
+
                     <div class="row mt-4">
                         <div class="col-12">
                             <h5><i class="fa fa-question-circle"></i> Preguntas para la entrevista</h5>

@@ -1,0 +1,17 @@
+[
+  {
+    "model": "content.companyresearch",
+    "pk": 1,
+    "fields": {
+      "company_name": "Fintual",
+      "company_url": "https://www.fintual.cl",
+      "technical_values": "Python/Django como stack principal\nPostgreSQL para base de datos\nDocker para contenedores\nAWS para infraestructura\nAPI RESTful para servicios\nTypeScript + React para front-end",
+      "products": "Plataforma de inversión automatizada\nFondos mutuos y de inversión\nHerramientas de planificación financiera\nCarteras digitales personalizadas",
+      "technologies": "Python 3.x\nDjango REST Framework\nPostgreSQL\nRedis\nDocker\nKubernetes\nAWS (EC2, RDS, S3)\nGitLab CI/CD\nTypeScript\nReact\nNext.js",
+      "methodologies": "Metodología ágil (Scrum)\nDesarrollo orientado a tests (TDD)\nCode review obligatorio\nIntegración continua\nDeploy continuo\nPair programming ocasional",
+      "innovation": "Enfoque en democratizar las inversiones\nUso de algoritmos para optimización de carteras\nAutomatización de procesos de inversión\nExperiencia de usuario simplificada\nTransparencia en comisiones y rendimiento",
+      "contribution_ways": "Desarrollo de nuevas funcionalidades en Python\nIntegración de fuentes de datos financieros\nAutomatización de procesos de back-office\nOptimización de queries y performance\nDocumentación y testing\nAnálisis de datos para mejoras de producto",
+      "interview_questions": "¿Cómo optimizarías una consulta SQL que tarda más de lo esperado?\nExplícame un proyecto donde combinaste conocimientos de negocio con programación\n¿Cómo manejarías un deadline ajustado con código de baja calidad?\n¿Qué métricas usarías para medir el éxito de una nueva funcionalidad?\nDescribe tu experiencia trabajando con datos financieros"
+    }
+  }
+]

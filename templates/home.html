@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Eduardo Muñoz - Analista de Datos | Desarrollador Full Stack Python{% endblock %}
+{% block title %}{% if profile %}
+                    {{ profile.first_name }} {{ profile.last_name }} - {{ profile.title }}
+                    {% else %}Mi Portafolio{% endif %}{% endblock %}
 
 {% block content %}
 <section class="container-fluid main-container container-home p-0 revealator-slideup revealator-once revealator-delay1">
@@ -17,19 +19,11 @@
                 {% if profile.photo %}
                 <img src="{{ profile.photo.url }}" class="img-fluid main-img-mobile d-none d-sm-block d-lg-none profile-photo" alt="{{ profile.first_name }}">
                 {% endif %}
-                <h1 class="text-uppercase poppins-font">
-                    {% if profile %}
-                    {{ profile.first_name }} {{ profile.last_name }}
-                    {% else %}
-                    Eduardo Muñoz
-                    {% endif %}
+<h1 class="text-uppercase poppins-font">
+                    {% if profile %}{{ profile.first_name }} {{ profile.last_name }}{% else %}Mi Portfolio{% endif %}
                 </h1>
                 <p class="open-sans-font">
-                    {% if profile %}
-                    {{ profile.title }}
-                    {% else %}
-                    Analista de Datos | Desarrollador Full Stack Python
-                    {% endif %}
+                    {% if profile %}{{ profile.title }}{% else %}Desarrollador Full Stack{% endif %}
                 </p>
                 {% if profile.bio %}
                 <p class="open-sans-font bio-text">{{ profile.bio|truncatewords:50 }}</p>

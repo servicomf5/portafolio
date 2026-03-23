@@ -1,9 +1,47 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Portafolio - {% if profile %}{{ profile.first_name }} {{ profile.last_name }}
-{% else %}Mi Portfolio{% endif %}{% endblock %}
+{% block title %}Portafolio - {% if profile %}{{ profile.first_name }} {{ profile.last_name }}{% else %}Mi Portfolio{% endif %}{% endblock %}
 {% block body_class %}portfolio{% endblock %}
+
+{% block extra_head %}
+<style>
+/* Modal override - carga al final */
+.cbp-popup-bg {
+    background-color: rgba(0,0,0,0.9) !important;
+}
+.cbp-popup-wrap {
+    background-color: rgba(10,10,10,0.95) !important;
+}
+.cbp-popup-content {
+    background-color: #333333 !important;
+    color: #eeeeee !important;
+    max-height: 80vh !important;
+    overflow-y: auto !important;
+    padding: 20px !important;
+    border-radius: 8px !important;
+}
+.cbp-popup-figure {
+    background-color: #1a1a1a !important;
+}
+.cbp-popup-figure img {
+    max-width: 100%;
+}
+.cbp-popup-lightbox figcaption h3 {
+    color: #ffffff !important;
+    font-size: 1.5rem !important;
+}
+.cbp-popup-lightbox .row {
+    color: #cccccc !important;
+}
+.cbp-popup-lightbox p {
+    color: #bbbbbb !important;
+}
+.cbp-popup-lightbox a {
+    color: #64b5f6 !important;
+}
+</style>
+{% endblock %}
 
 {% block content %}
 <!-- Page Title Starts -->

@@ -7,9 +7,33 @@
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/portfolio-modal.css' %}">
 <style>
-.cbp-popup-content { background: #333 !important; color: #eee !important; max-height: 80vh !important; overflow-y: auto !important; }
-.cbp-popup-wrap { background: rgba(20,20,20,0.95) !important; }
-.cbp-popup-lightbox { background: rgba(0,0,0,0.95) !important; }
+/* Forzar estilos del modal con mayor especificidad */
+body .cbp-popup-content, 
+html body .cbp-popup-content,
+.cbp-popup-lightbox .cbp-popup-content,
+.cbp-popup-singlePage .cbp-popup-content {
+    background: #333 !important;
+    color: #eee !important;
+    max-height: 80vh !important;
+    overflow-y: auto !important;
+    padding: 20px !important;
+}
+body .cbp-popup-wrap,
+html body .cbp-popup-wrap {
+    background: rgba(20,20,20,0.95) !important;
+}
+body .cbp-popup-lightbox,
+html body .cbp-popup-lightbox {
+    background: rgba(0,0,0,0.95) !important;
+}
+.cbp-popup-figcaption {
+    background: #333 !important;
+    color: #eee !important;
+    padding: 15px !important;
+}
+.cbp-popup-figcaption * {
+    color: #ddd !important;
+}
 </style>
 {% endblock %}
 

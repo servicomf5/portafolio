@@ -5,20 +5,34 @@
 {% block body_class %}portfolio{% endblock %}
 
 {% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/portfolio-modal.css' %}">
 <style>
-/* Scroll solo en el modal */
-.cbp-popup-content {
-    max-height: 70vh !important;
+/* Forzar estilos del modal con mayor especificidad */
+body .cbp-popup-content, 
+html body .cbp-popup-content,
+.cbp-popup-lightbox .cbp-popup-content,
+.cbp-popup-singlePage .cbp-popup-content {
+    background: #333 !important;
+    color: #eee !important;
+    max-height: 80vh !important;
     overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch;
+    padding: 20px !important;
 }
-.cbp-popup-figure {
-    max-height: 30vh !important;
-    overflow: hidden;
+body .cbp-popup-wrap,
+html body .cbp-popup-wrap {
+    background: rgba(20,20,20,0.95) !important;
 }
-.cbp-popup-figure img {
-    max-height: 30vh;
-    object-fit: contain;
+body .cbp-popup-lightbox,
+html body .cbp-popup-lightbox {
+    background: rgba(0,0,0,0.95) !important;
+}
+.cbp-popup-figcaption {
+    background: #333 !important;
+    color: #eee !important;
+    padding: 15px !important;
+}
+.cbp-popup-figcaption * {
+    color: #ddd !important;
 }
 </style>
 {% endblock %}

@@ -128,13 +128,13 @@
                                 {% if project.demo_url %}
                                 <div class="col-12 col-sm-6 mb-2">
                                     <i class="fa fa-external-link pr-2"></i><span class="project-label">Demo: </span>
-                                    <a href="{{ project.demo_url }}" target="_blank">{{ project.demo_url|truncatechars:30 }}</a>
+                                    <a href="{{ project.demo_url }}" target="_blank">{{ project.demo_url }}</a>
                                 </div>
                                 {% endif %}
                                 {% if project.repo_url %}
                                 <div class="col-12 col-sm-6 mb-2">
                                     <i class="fa fa-github pr-2"></i><span class="project-label">Repo: </span>
-                                    <a href="{{ project.repo_url }}" target="_blank">{{ project.repo_url|truncatechars:30 }}</a>
+                                    <a href="{{ project.repo_url }}" target="_blank">{{ project.repo_url }}</a>
                                 </div>
                                 {% endif %}
                             </div>
@@ -178,8 +178,81 @@
 .case-study-card p { color: #555; }
 .case-study-section h4 { color: #444; }
 
-/* Projects Grid */
-.project-card { background: #fff; border-radius: 8px; }
-.project-card:hover { transform: translateY(-5px); }
+/* Projects Grid - imágenes cuadradas */
+.grid figure {
+    position: relative;
+    overflow: hidden;
+    background: #1a1a1a; /* Fondo negro */
+    aspect-ratio: 1 / 1; /* Cuadrado */
+}
+
+.grid figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Recorta sin deformar */
+    object-position: center;
+}
+
+.grid figure > div {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Modal/lightbox - fondo suave y scroll */
+.slideshow {
+    background: rgba(255, 255, 255, 0.97) !important;
+    overflow-y: auto;
+    max-height: 100vh;
+}
+
+.slideshow figure {
+    background: #fff;
+    margin: 20px auto;
+    max-width: 90%;
+}
+
+.slideshow figcaption {
+    background: #fafafa !important;
+    color: #333 !important;
+    padding: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.slideshow figcaption h3 {
+    color: #222 !important;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.slideshow .project-label {
+    color: #666;
+    font-weight: 600;
+}
+
+.slideshow a {
+    color: #0066cc;
+    word-break: break-all;
+}
+
+.slideshow p {
+    color: #444 !important;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Project links */
+.row.open-sans-font {
+    color: #444;
+}
+.row.open-sans-font .ft-wt-600 {
+    color: #222;
+}
 </style>
 {% endblock %}

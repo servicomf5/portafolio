@@ -5,86 +5,6 @@
 {% block body_class %}portfolio{% endblock %}
 
 {% block extra_head %}
-<style>
-/* Modal/lightbox - fondo oscuro fuera, modal gris oscuro con scroll */
-.cbp-popup-lightbox {
-    background: rgba(10, 10, 10, 0.97) !important;
-}
-
-.cbp-popup-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-.cbp-popup-content {
-    background: #2d2d2d !important;
-    border-radius: 12px;
-    max-width: 800px;
-    width: 100%;
-    max-height: 85vh;
-    overflow-y: auto !important;
-    padding: 25px;
-    box-shadow: 0 10px 50px rgba(0,0,0,0.6);
-    scrollbar-width: thin;
-    scrollbar-color: #555 #222;
-}
-
-/* Scrollbar styles */
-.cbp-popup-content::-webkit-scrollbar {
-    width: 8px;
-}
-.cbp-popup-content::-webkit-scrollbar-track {
-    background: #222;
-}
-.cbp-popup-content::-webkit-scrollbar-thumb {
-    background: #555;
-    border-radius: 4px;
-}
-
-.cbp-popup-figure {
-    background: #111;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.cbp-popup-figcaption {
-    background: transparent !important;
-    padding: 0;
-}
-
-.cbp-popup-figcaption h3 {
-    color: #fff !important;
-    font-size: 1.5rem;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #444;
-    padding-bottom: 10px;
-}
-
-.cbp-popup-figcaption .row {
-    color: #bbb !important;
-}
-
-.cbp-popup-figcaption .project-label {
-    color: #888 !important;
-}
-
-.cbp-popup-figcaption .ft-wt-600 {
-    color: #fff !important;
-}
-
-.cbp-popup-figcaption a {
-    color: #5dade2 !important;
-}
-
-.cbp-popup-figcaption p {
-    color: #ccc !important;
-    font-size: 0.95rem;
-    line-height: 1.6;
-}
-</style>
 {% endblock %}
 
 {% block content %}
@@ -284,6 +204,57 @@
     color: #fff;
     padding: 10px;
     text-align: center;
+}
+
+/* Modal/lightbox - fondo suave y scroll */
+.slideshow {
+    background: rgba(255, 255, 255, 0.97) !important;
+    overflow-y: auto;
+    max-height: 100vh;
+}
+
+.slideshow figure {
+    background: #fff;
+    margin: 20px auto;
+    max-width: 90%;
+}
+
+.slideshow figcaption {
+    background: #fafafa !important;
+    color: #333 !important;
+    padding: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.slideshow figcaption h3 {
+    color: #222 !important;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.slideshow .project-label {
+    color: #666;
+    font-weight: 600;
+}
+
+.slideshow a {
+    color: #0066cc;
+    word-break: break-all;
+}
+
+.slideshow p {
+    color: #444 !important;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Project links */
+.row.open-sans-font {
+    color: #444;
+}
+.row.open-sans-font .ft-wt-600 {
+    color: #222;
 }
 </style>
 {% endblock %}

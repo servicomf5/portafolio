@@ -223,7 +223,8 @@
         if (isSubmitting) return;
         isSubmitting = true;
         
-        submitBtn.disabled = true;
+        // Agregar clase loading para mostrar spinner
+        submitBtn.classList.add('loading');
         submitBtn.querySelector('.button-text').textContent = 'Enviando...';
         messageDiv.style.display = 'none';
         
@@ -256,7 +257,7 @@
         })
         .finally(function() {
             isSubmitting = false;
-            submitBtn.disabled = false;
+            submitBtn.classList.remove('loading');
             submitBtn.querySelector('.button-text').textContent = 'Enviar mensaje';
         });
     });

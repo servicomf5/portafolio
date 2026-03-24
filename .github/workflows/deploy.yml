@@ -38,11 +38,11 @@ jobs:
             echo 'DB_HOST=postgres' >> /opt/portafolio/.env
             echo 'DB_PORT=5432' >> /opt/portafolio/.env
             echo 'EMAIL_BACKEND=portafolio.email_backend.HTTPMailerBackend' >> /opt/portafolio/.env
-            echo 'MAILER_URL=http://servicomf5-mailer:8001/mailer/send' >> /opt/portafolio/.env
+            echo 'MAILER_URL=http://172.21.0.4:8001/mailer/send' >> /opt/portafolio/.env
             echo 'DEFAULT_FROM_EMAIL=no-reply@servicomf5.cl' >> /opt/portafolio/.env
             echo 'CONTACT_EMAIL=eduardomunoz.trabajo@gmail.com' >> /opt/portafolio/.env
           "
-      
+
       - name: Upload files to VPS
         run: |
           rsync -avz --delete \

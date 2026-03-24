@@ -48,3 +48,4 @@ docs/
 dark/
 .ruff_cache/
 *.sql
+ENTREGABLE.md

@@ -208,18 +208,29 @@
 
 {% block extra_js %}
 <script>
+// Prevenir múltiples envíos
+var contactFormSubmitted = false;
+
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('contact-form');
     const submitBtn = document.getElementById('submit-btn');
     const messageDiv = document.getElementById('form-message');
     
+    // Prevenir que jQuery también capture el submit
+    form.addEventListener('submit', function(e) {
+        // Prevenir cualquier handler adicional
+        e.stopImmediatePropagation();
+    }, true); // Usar capture phase para ejecutarse primero
+    
+    // Solo nuestro handler
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         
         // Si ya está enviando, no hacer nada
-        if (submitBtn.classList.contains('loading')) {
+        if (submitBtn.classList.contains('loading') || contactFormSubmitted) {
             return;
         }
+        contactFormSubmitted = true;
         
         // Mostrar estado de enviando
         submitBtn.classList.add('loading');
@@ -276,11 +287,12 @@ document.addEventListener('DOMContentLoaded', function() {
             messageDiv.style.display = 'block';
         })
         .finally(function() {
-            // Restaurar botón
+            // Restaurar estado
+            contactFormSubmitted = false;
             submitBtn.classList.remove('loading');
             submitBtn.querySelector('.button-text').textContent = 'Enviar mensaje';
         });
-    });
+    }, false); // Bubbling phase para ejecutarse después del stopImmediatePropagation
 });
 </script>
 {% endblock %}

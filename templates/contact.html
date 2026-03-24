@@ -215,15 +215,20 @@
     
     const submitBtn = document.getElementById('submit-btn');
     const messageDiv = document.getElementById('form-message');
-    let isSubmitting = false;
+    let submitted = false;
     
     form.addEventListener('submit', function(e) {
+        // Prevenir inmediatamente cualquier envío adicional
+        if (submitted) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            return false;
+        }
+        submitted = true;
         e.preventDefault();
         
-        if (isSubmitting) return;
-        isSubmitting = true;
-        
-        // Agregar clase loading para mostrar spinner
+        // Deshabilitar botón inmediatamente
+        submitBtn.disabled = true;
         submitBtn.classList.add('loading');
         submitBtn.querySelector('.button-text').textContent = 'Enviando...';
         messageDiv.style.display = 'none';
@@ -248,17 +253,22 @@
                 messageDiv.textContent = 'Por favor corrige los errores.';
                 messageDiv.className = 'form-message error';
                 messageDiv.style.display = 'block';
+                submitted = false;
+                submitBtn.disabled = false;
             }
         })
         .catch(function() {
             messageDiv.textContent = 'Error de conexión.';
             messageDiv.className = 'form-message error';
             messageDiv.style.display = 'block';
+            submitted = false;
+            submitBtn.disabled = false;
         })
         .finally(function() {
-            isSubmitting = false;
             submitBtn.classList.remove('loading');
-            submitBtn.querySelector('.button-text').textContent = 'Enviar mensaje';
+            if (submitBtn.disabled) {
+                submitBtn.querySelector('.button-text').textContent = 'Enviando...';
+            }
         });
     });
 })();

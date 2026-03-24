@@ -47,25 +47,12 @@ class HTTPMailerBackend(BaseEmailBackend):
         """
         Send email via HTTP API with HTML template
         """
-        # Extract sender email from body for reply-to
-        sender_email = ""
-        for line in body.split("\n"):
-            if line.startswith("De:"):
-                import re
-
-                email_match = re.search(r"<(.+?)>", line)
-                if email_match:
-                    sender_email = email_match.group(1)
-                break
-
         # Create HTML email template
         html_body = self._create_html_email(subject, body)
 
         payload = {"to": to, "subject": subject, "body": html_body}
 
-        # Add reply-to if we have sender email
-        if sender_email:
-            payload["from_email"] = sender_email
+        response = requests.post(self.mailer_url, json=payload, timeout=30)
 
         response = requests.post(self.mailer_url, json=payload, timeout=30)
 
@@ -78,6 +65,8 @@ class HTTPMailerBackend(BaseEmailBackend):
         """
         Create a nice HTML email template
         """
+        import re
+
         # Parse the plain text body to extract info
         lines = body.split("\n")
         from_line = ""
@@ -88,8 +77,6 @@ class HTTPMailerBackend(BaseEmailBackend):
             if line.startswith("De:"):
                 from_line = line.replace("De:", "").strip()
                 # Extract email from format "nombre <email>"
-                import re
-
                 email_match = re.search(r"<(.+?)>", from_line)
                 if email_match:
                     from_email = email_match.group(1)

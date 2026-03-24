@@ -47,3 +47,4 @@ htmlcov/
 docs/
 dark/
 .ruff_cache/
+*.sql

@@ -9,26 +9,29 @@ Proyecto académico de portafolio profesional construido con Django 5.x y Postgr
 
 ## Stack Tecnológico
 
-- **Backend**: Django 5.x (Python 3.x)
+- **Backend**: Django 5.x (Python 3.12)
 - **Base de datos**: PostgreSQL 17
 - **Frontend**: Bootstrap 4, jQuery (basado en plantilla Tunis)
 - **Contenedor**: Docker + Docker Compose
 - **CI/CD**: GitHub Actions
 - **Deployment**: VPS (Contabo)
+- **Email**: API HTTP personalizada via servicomf5-mailer
 
 ## Características
 
-- ✅ Perfil profesional dinámicas desde Base de Datos
+- ✅ Perfil profesional dinámico desde Base de Datos
 - ✅ Sistema de habilidades con porcentajes visuales
 - ✅ Gestión de experiencia laboral y educación
 - ✅ Portafolio de proyectos con imágenes
 - ✅ Caso de estudio del bootcamp
 - ✅ Análisis FODA personal
 - ✅ Investigación de empresa objetivo
-- ✅ Formulario de contacto funcional
-- ✅ Panel de administración Django
+- ✅ Formulario de contacto con AJAX y feedback visual
+- ✅ Envío de emails con template HTML profesional
+- ✅ Panel de Administración Django
 - ✅ Diseño responsivo (Bootstrap 4)
-- ✅ plantilles Multilenguaje (Español)
+- ✅ Plantillas Multilenguaje (Español)
+- ✅ Despliegue automático via GitHub Actions
 
 ## Requisitos
 
@@ -175,18 +178,18 @@ Acceder a `/admin/` con el superusuario creado. Desde allí se pueden gestionar:
 
 | Variable | Descripción | Valor por defecto |
 |----------|-------------|-------------------|
-| `DEBUG` | Modo debug | `True` |
+| `DEBUG` | Modo debug | `False` |
 | `DJANGO_SECRET_KEY` | Clave secreta Django | (generar nueva) |
-| `ALLOWED_HOSTS` | Hosts permitidos | `localhost,127.0.0.1` |
+| `ALLOWED_HOSTS` | Hosts permitidos | `localhost,127.0.0.1,portafolio.servicomf5.cl` |
 | `DB_NAME` | Nombre base de datos | `portafolio_db` |
 | `DB_USER` | Usuario PostgreSQL | `portafolio_user` |
 | `DB_PASSWORD` | Contraseña PostgreSQL | (configurar) |
-| `DB_HOST` | Host PostgreSQL | `localhost` |
+| `DB_HOST` | Host PostgreSQL | `postgres` |
 | `DB_PORT` | Puerto PostgreSQL | `5432` |
-| `EMAIL_BACKEND` | Backend de email | `console.EmailBackend` |
-| `EMAIL_HOST` | Servidor SMTP | `smtp.gmail.com` |
-| `EMAIL_PORT` | Puerto SMTP | `587` |
-| `CONTACT_EMAIL` | Email de destino del contacto | `email@ejemplo.com` |
+| `EMAIL_BACKEND` | Backend de email | `portafolio.email_backend.HTTPMailerBackend` |
+| `MAILER_URL` | URL del API de email | `http://servicomf5-mailer:8001/mailer/send` |
+| `DEFAULT_FROM_EMAIL` | Email remitente | `no-reply@tudominio.cl` |
+| `CONTACT_EMAIL` | Email de destino del contacto | `tuemail@gmail.com` |
 
 ## GitHub Actions (CI/CD)
 

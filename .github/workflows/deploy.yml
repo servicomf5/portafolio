@@ -56,7 +56,7 @@ jobs:
       
       - name: Build and start Docker
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "cd /opt/portafolio && docker-compose up -d"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "cd /opt/portafolio && docker-compose up -d --build"
       
       - name: Wait for services to be ready
         run: |

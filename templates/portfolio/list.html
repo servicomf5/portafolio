@@ -208,13 +208,13 @@
                                     <span class="ft-wt-600">{{ project.technologies }}</span>
                                 </div>
                                 {% if project.demo_url %}
-                                <div class="col-12 col-sm-6 mb-2">
+                                <div class="col-12 col-sm-2 mb-2">
                                     <i class="fa fa-external-link pr-2"></i><span class="project-label">Demo: </span>
                                     <a href="{{ project.demo_url }}" target="_blank">{{ project.demo_url }}</a>
                                 </div>
                                 {% endif %}
                                 {% if project.repo_url %}
-                                <div class="col-12 col-sm-6 mb-2">
+                                <div class="col-12">
                                     <i class="fa fa-github pr-2"></i><span class="project-label">Repo: </span>
                                     <a href="{{ project.repo_url }}" target="_blank">{{ project.repo_url }}</a>
                                 </div>
@@ -297,7 +297,7 @@
     background: #fafafa !important;
     color: #333 !important;
     padding: 20px;
-    max-height: 500px;
+    max-height: 600px;
     overflow-y: auto;
 }
 
@@ -329,6 +329,17 @@
 }
 .row.open-sans-font .ft-wt-600 {
     color: #222;
+}
+
+/* Fix: mantener visible el menú lateral cuando se cierra el slideshow */
+header#navbar-collapse-toggle {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+header#navbar-collapse-toggle .icon-menu {
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 </style>
 {% endblock %}

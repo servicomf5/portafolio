@@ -128,16 +128,15 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 
-# Email Configuration
-EMAIL_BACKEND = os.getenv(
-    "EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend"
-)
+# Email Configuration - HTTP Mailer
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", "portafolio.email_backend.HTTPMailerBackend")
 EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
 EMAIL_PORT = int(os.getenv("EMAIL_PORT", "587"))
 EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True").lower() in ("true", "1", "yes")
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "noreply@portafolio.servicomf5.cl")
+MAILER_URL = os.getenv("MAILER_URL", "http://servicomf5-mailer:8001/mailer/send")
 
 # Contact form
 CONTACT_EMAIL = os.getenv("CONTACT_EMAIL", "eduardomunoz.trabajo@gmail.com")

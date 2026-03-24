@@ -17,3 +17,6 @@ crispy-bootstrap4>=2.0
 # Python-dotenv for env vars
 python-dotenv>=1.0.0
 whitenoise
+
+# HTTP client for mailer backend
+requests>=2.31.0

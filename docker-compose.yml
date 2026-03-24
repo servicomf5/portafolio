@@ -24,6 +24,9 @@ services:
     volumes:
       - static_volume:/app/staticfiles
       - media_volume:/app/media
+    networks:
+      - portafolio_default
+      - servicomf5-network
 
   postgres:
     image: postgres:17-alpine
@@ -48,3 +51,9 @@ volumes:
   postgres_data:
   static_volume:
   media_volume:
+
+networks:
+  portafolio_default:
+    external: true
+  servicomf5-network:
+    external: true

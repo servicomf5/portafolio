@@ -18,6 +18,13 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
       
+      - name: Ensure networks exist
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "
+            docker network create servicomf5-network 2>/dev/null || true
+            docker network create portafolio_default 2>/dev/null || true
+          "
+      
       - name: Create .env file
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "
@@ -30,12 +37,8 @@ jobs:
             echo 'DB_PASSWORD=${{ secrets.DB_PASSWORD }}' >> /opt/portafolio/.env
             echo 'DB_HOST=postgres' >> /opt/portafolio/.env
             echo 'DB_PORT=5432' >> /opt/portafolio/.env
-            echo 'EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend' >> /opt/portafolio/.env
-            echo 'EMAIL_HOST=127.0.0.1' >> /opt/portafolio/.env
-            echo 'EMAIL_PORT=587' >> /opt/portafolio/.env
-            echo 'EMAIL_USE_TLS=True' >> /opt/portafolio/.env
-            echo 'EMAIL_HOST_USER=no-reply@servicomf5.cl' >> /opt/portafolio/.env
-            echo 'EMAIL_HOST_PASSWORD=${{ secrets.EMAIL_PASSWORD }}' >> /opt/portafolio/.env
+            echo 'EMAIL_BACKEND=portafolio.email_backend.HTTPMailerBackend' >> /opt/portafolio/.env
+            echo 'MAILER_URL=http://servicomf5-mailer:8001/mailer/send' >> /opt/portafolio/.env
             echo 'DEFAULT_FROM_EMAIL=no-reply@servicomf5.cl' >> /opt/portafolio/.env
             echo 'CONTACT_EMAIL=eduardomunoz.trabajo@gmail.com' >> /opt/portafolio/.env
           "

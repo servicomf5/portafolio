@@ -208,91 +208,58 @@
 
 {% block extra_js %}
 <script>
-// Prevenir múltiples envíos
-var contactFormSubmitted = false;
-
-document.addEventListener('DOMContentLoaded', function() {
+// Contact Form Handler - se ejecuta inmediatamente
+(function() {
     const form = document.getElementById('contact-form');
+    if (!form) return;
+    
     const submitBtn = document.getElementById('submit-btn');
     const messageDiv = document.getElementById('form-message');
+    let isSubmitting = false;
     
-    // Prevenir que jQuery también capture el submit
-    form.addEventListener('submit', function(e) {
-        // Prevenir cualquier handler adicional
-        e.stopImmediatePropagation();
-    }, true); // Usar capture phase para ejecutarse primero
-    
-    // Solo nuestro handler
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Si ya está enviando, no hacer nada
-        if (submitBtn.classList.contains('loading') || contactFormSubmitted) {
-            return;
-        }
-        contactFormSubmitted = true;
+        if (isSubmitting) return;
+        isSubmitting = true;
         
-        // Mostrar estado de enviando
-        submitBtn.classList.add('loading');
+        submitBtn.disabled = true;
         submitBtn.querySelector('.button-text').textContent = 'Enviando...';
-        
-        // Ocultar mensajes anteriores
         messageDiv.style.display = 'none';
-        messageDiv.className = 'form-message';
-        
-        // Enviar datos
-        const formData = new FormData(form);
         
         fetch(form.action, {
             method: 'POST',
-            body: formData
+            body: new FormData(form)
         })
-        .then(response => response.json())
-        .then(data => {
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
             if (data.success) {
-                // Mostrar mensaje de éxito
                 messageDiv.textContent = data.message;
                 messageDiv.className = 'form-message success';
                 messageDiv.style.display = 'block';
-                
-                // Limpiar formulario
                 form.reset();
-                
-                // Scroll al mensaje
                 messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                
-                // Auto-ocultar después de 5 segundos
                 setTimeout(function() {
-                    messageDiv.style.transition = 'opacity 0.5s';
                     messageDiv.style.opacity = '0';
-                    setTimeout(function() {
-                        messageDiv.style.display = 'none';
-                        messageDiv.style.opacity = '1';
-                    }, 500);
+                    setTimeout(function() { messageDiv.style.display = 'none'; messageDiv.style.opacity = '1'; }, 500);
                 }, 5000);
             } else {
-                // Mostrar errores
-                let errorMsg = 'Por favor corrige los errores.';
-                if (data.errors) {
-                    errorMsg = Object.values(data.errors).join('. ');
-                }
-                messageDiv.textContent = errorMsg;
+                messageDiv.textContent = 'Por favor corrige los errores.';
                 messageDiv.className = 'form-message error';
                 messageDiv.style.display = 'block';
             }
         })
-        .catch(error => {
-            messageDiv.textContent = 'Error de conexión. Por favor intenta de nuevo.';
+        .catch(function() {
+            messageDiv.textContent = 'Error de conexión.';
             messageDiv.className = 'form-message error';
             messageDiv.style.display = 'block';
         })
         .finally(function() {
-            // Restaurar estado
-            contactFormSubmitted = false;
-            submitBtn.classList.remove('loading');
+            isSubmitting = false;
+            submitBtn.disabled = false;
             submitBtn.querySelector('.button-text').textContent = 'Enviar mensaje';
         });
-    }, false); // Bubbling phase para ejecutarse después del stopImmediatePropagation
-});
+    });
+})();
 </script>
 {% endblock %}

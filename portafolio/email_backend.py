@@ -54,8 +54,6 @@ class HTTPMailerBackend(BaseEmailBackend):
 
         response = requests.post(self.mailer_url, json=payload, timeout=30)
 
-        response = requests.post(self.mailer_url, json=payload, timeout=30)
-
         if response.status_code not in (200, 201):
             raise Exception(
                 f"Mailer API error: {response.status_code} - {response.text}"

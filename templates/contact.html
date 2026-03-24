@@ -61,15 +61,9 @@
 
             <!-- Contact Form Starts -->
             <div class="col-12 col-lg-8">
-                {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                    <li class="{{ message.tags }}">{{ message }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
+                <div id="form-message" class="form-message" style="display: none;"></div>
 
-                <form class="contactform" method="post" action="{% url 'contact' %}">
+                <form class="contactform" id="contact-form" method="post" action="{% url 'contact_ajax' %}">
                     {% csrf_token %}
                     <div class="contactform">
                         <div class="row">
@@ -98,7 +92,7 @@
                                 {% endif %}
                             </div>
                             <div class="col-12">
-                                <button type="submit" class="button">
+                                <button type="submit" class="button" id="submit-btn">
                                     <span class="button-text">Enviar mensaje</span>
                                     <span class="button-icon fa fa-send"></span>
                                 </button>
@@ -158,39 +152,25 @@
     background: #333;
 }
 
-/* Mensajes de Django - alta visibilidad */
-.messages {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 20px 0;
-}
-
-.messages li {
+/* Mensajes de formulario */
+.form-message {
     padding: 15px 20px;
     border-radius: 4px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     font-weight: 500;
     animation: slideDown 0.3s ease;
 }
 
-.messages li.success,
-.alert-success {
-    background-color: #d4edda !important;
+.form-message.success {
+    background-color: #d4edda;
     border: 2px solid #28a745;
     color: #155724;
 }
 
-.messages li.error,
-.alert-danger {
-    background-color: #f8d7da !important;
+.form-message.error {
+    background-color: #f8d7da;
     border: 2px solid #dc3545;
     color: #721c24;
-}
-
-.messages li.info {
-    background-color: #d1ecf1 !important;
-    border: 2px solid #17a2b8;
-    color: #0c5460;
 }
 
 @keyframes slideDown {
@@ -203,23 +183,103 @@
         transform: translateY(0); 
     }
 }
+
+/* Estado de envío del botón */
+.button.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.button.loading .button-text {
+    opacity: 0.5;
+}
+
+.button.loading .button-icon::before {
+    content: '\f110';
+    animation: fa-spin 1s infinite linear;
+}
+
+@keyframes fa-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 </style>
 {% endblock %}
 
 {% block extra_js %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Auto-ocultar mensajes después de 5 segundos
-    const messages = document.querySelectorAll('.messages li');
-    messages.forEach(function(msg) {
-        setTimeout(function() {
-            msg.style.transition = 'opacity 0.5s, transform 0.5s';
-            msg.style.opacity = '0';
-            msg.style.transform = 'translateY(-10px)';
-            setTimeout(function() {
-                msg.remove();
-            }, 500);
-        }, 5000);
+    const form = document.getElementById('contact-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const messageDiv = document.getElementById('form-message');
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Si ya está enviando, no hacer nada
+        if (submitBtn.classList.contains('loading')) {
+            return;
+        }
+        
+        // Mostrar estado de enviando
+        submitBtn.classList.add('loading');
+        submitBtn.querySelector('.button-text').textContent = 'Enviando...';
+        
+        // Ocultar mensajes anteriores
+        messageDiv.style.display = 'none';
+        messageDiv.className = 'form-message';
+        
+        // Enviar datos
+        const formData = new FormData(form);
+        
+        fetch(form.action, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Mostrar mensaje de éxito
+                messageDiv.textContent = data.message;
+                messageDiv.className = 'form-message success';
+                messageDiv.style.display = 'block';
+                
+                // Limpiar formulario
+                form.reset();
+                
+                // Scroll al mensaje
+                messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // Auto-ocultar después de 5 segundos
+                setTimeout(function() {
+                    messageDiv.style.transition = 'opacity 0.5s';
+                    messageDiv.style.opacity = '0';
+                    setTimeout(function() {
+                        messageDiv.style.display = 'none';
+                        messageDiv.style.opacity = '1';
+                    }, 500);
+                }, 5000);
+            } else {
+                // Mostrar errores
+                let errorMsg = 'Por favor corrige los errores.';
+                if (data.errors) {
+                    errorMsg = Object.values(data.errors).join('. ');
+                }
+                messageDiv.textContent = errorMsg;
+                messageDiv.className = 'form-message error';
+                messageDiv.style.display = 'block';
+            }
+        })
+        .catch(error => {
+            messageDiv.textContent = 'Error de conexión. Por favor intenta de nuevo.';
+            messageDiv.className = 'form-message error';
+            messageDiv.style.display = 'block';
+        })
+        .finally(function() {
+            // Restaurar botón
+            submitBtn.classList.remove('loading');
+            submitBtn.querySelector('.button-text').textContent = 'Enviar mensaje';
+        });
     });
 });
 </script>

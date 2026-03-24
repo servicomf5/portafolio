@@ -1,4 +1,5 @@
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
+from django.template.loader import render_to_string
 from django.views.generic import FormView
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -33,24 +34,65 @@ class ContactView(FormView):
             f"{profile.first_name} {profile.last_name}" if profile else "el propietario"
         )
 
-        # Construir el cuerpo del email
-        email_body = f"""
-Mensaje desde el portafolio de {owner_name}.
+        # Enviar email HTML
+        recipient = getattr(settings, "CONTACT_EMAIL", "email@ejemplo.com")
+
+        # Versión texto plano
+        text_content = f"""
+Nuevo mensaje desde el portafolio de {owner_name}.
 
 De: {name} <{email}>
+Asunto: {subject}
 
+Mensaje:
 {message}
 """
 
-        # Enviar email al destino configurado
-        recipient = getattr(settings, "CONTACT_EMAIL", "email@ejemplo.com")
-        send_mail(
+        # Versión HTML
+        html_content = f"""
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {{ font-family: 'Segoe UI', Arial, sans-serif; background: #f5f5f5; padding: 20px; }}
+        .container {{ max-width: 600px; margin: 0 auto; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }}
+        .header {{ background: #f9a826; color: #fff; padding: 20px; text-align: center; }}
+        .header h1 {{ margin: 0; font-size: 24px; }}
+        .content {{ padding: 20px; }}
+        .label {{ font-weight: bold; color: #333; }}
+        .value {{ color: #555; margin-bottom: 10px; }}
+        .message-box {{ background: #f9f9f9; padding: 15px; border-left: 4px solid #f9a826; margin-top: 15px; white-space: pre-wrap; }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📬 Nuevo mensaje del Portfolio</h1>
+        </div>
+        <div class="content">
+            <p class="label">De:</p>
+            <p class="value">{name} &lt;{email}&gt;</p>
+            
+            <p class="label">Asunto:</p>
+            <p class="value">{subject}</p>
+            
+            <p class="label">Mensaje:</p>
+            <div class="message-box">{message}</div>
+        </div>
+    </div>
+</body>
+</html>
+"""
+
+        # Enviar email con ambas versiones
+        msg = EmailMultiAlternatives(
             subject=f"[Portafolio Contacto] {subject}",
-            message=email_body,
+            body=text_content,
             from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[recipient],
-            fail_silently=False,
+            to=[recipient],
         )
+        msg.attach_alternative(html_content, "text/html")
+        msg.send(fail_silently=False)
 
         # Mostrar mensaje de éxito
         messages.success(

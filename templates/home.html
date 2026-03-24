@@ -94,7 +94,7 @@
 
 {% block extra_css %}
 <style>
-/* Profile photo - columna izquierda del home */
+/* Profile photo - columna izquierda del home (escritorio) */
 .col-lg-4.bg.position-fixed {
     background: transparent !important;
     height: 100vh;
@@ -124,6 +124,41 @@
     transform: translate(-50%, -52%);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
 }
+
+/* Mobile: foto arriba del texto, sin superposición */
+@media (max-width: 991px) {
+    .home-details-container {
+        flex-direction: column !important;
+        display: block !important;
+    }
+    
+    .home-details {
+        width: 100% !important;
+        margin-left: 0 !important;
+        padding: 20px !important;
+        text-align: center !important;
+    }
+    
+    .profile-photo {
+        position: relative !important;
+        transform: none !important;
+        width: 60% !important;
+        max-width: 250px !important;
+        max-height: 300px !important;
+        margin: 0 auto 20px !important;
+        top: auto !important;
+        left: auto !important;
+        border-radius: 20px !important;
+    }
+    
+    .home-details h1 {
+        font-size: 1.8rem !important;
+        margin-top: 10px !important;
+    }
+    
+    .home-details p {
+        font-size: 0.95rem !important;
+    }
 }
 
 /* Hero section adjustments */

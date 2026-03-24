@@ -62,11 +62,11 @@
             <!-- Contact Form Starts -->
             <div class="col-12 col-lg-8">
                 {% if messages %}
-                <div class="alert alert-success" role="alert">
+                <ul class="messages">
                     {% for message in messages %}
-                    {{ message }}
+                    <li class="{{ message.tags }}">{{ message }}</li>
                     {% endfor %}
-                </div>
+                </ul>
                 {% endif %}
 
                 <form class="contactform" method="post" action="{% url 'contact' %}">
@@ -158,30 +158,50 @@
     background: #333;
 }
 
-/* Estilos para mensajes de Django */
+/* Mensajes de Django - alta visibilidad */
+.messages {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.messages li {
+    padding: 15px 20px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    animation: slideDown 0.3s ease;
+}
+
+.messages li.success,
 .alert-success {
-    background-color: #d4edda;
-    border-color: #c3e6cb;
+    background-color: #d4edda !important;
+    border: 2px solid #28a745;
     color: #155724;
-    padding: 15px;
-    border-radius: 4px;
-    margin-bottom: 20px;
-    animation: fadeIn 0.3s ease;
 }
 
+.messages li.error,
 .alert-danger {
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
+    background-color: #f8d7da !important;
+    border: 2px solid #dc3545;
     color: #721c24;
-    padding: 15px;
-    border-radius: 4px;
-    margin-bottom: 20px;
-    animation: fadeIn 0.3s ease;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+.messages li.info {
+    background-color: #d1ecf1 !important;
+    border: 2px solid #17a2b8;
+    color: #0c5460;
+}
+
+@keyframes slideDown {
+    from { 
+        opacity: 0; 
+        transform: translateY(-20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
 }
 </style>
 {% endblock %}
@@ -190,11 +210,12 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Auto-ocultar mensajes después de 5 segundos
-    const messages = document.querySelectorAll('.alert-success, .alert-danger');
+    const messages = document.querySelectorAll('.messages li');
     messages.forEach(function(msg) {
         setTimeout(function() {
-            msg.style.transition = 'opacity 0.5s';
+            msg.style.transition = 'opacity 0.5s, transform 0.5s';
             msg.style.opacity = '0';
+            msg.style.transform = 'translateY(-10px)';
             setTimeout(function() {
                 msg.remove();
             }, 500);

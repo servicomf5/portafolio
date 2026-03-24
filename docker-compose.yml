@@ -17,7 +17,6 @@ services:
       - DB_PASSWORD=${DB_PASSWORD:-portafolio_password}
       - DB_HOST=postgres
       - DB_PORT=5432
-      - EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
     depends_on:
       postgres:
         condition: service_healthy
